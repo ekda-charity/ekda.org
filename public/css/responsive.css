@@ -1,0 +1,15 @@
+
+@media screen and ( max-width: 992px ) {
+    .for-lg-screen, #main-nav-lg, .side-bar {
+        display: none;
+    }
+    .main-content {
+        margin-left: 0!important;
+    }
+}
+
+@media screen and ( min-width: 992px ) {
+    .for-sm-screen, #main-nav-sm {
+        display: none;
+    }
+}

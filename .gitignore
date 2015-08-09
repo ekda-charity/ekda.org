@@ -18,3 +18,9 @@ temp/
 # Legacy ZF1
 demos/
 extras/documentation
+/nbproject/private/
+/config/autoload/production.php
+/config/autoload/qa.php
+/config/autoload/development.php
+/public/wordpress/
+/data/deployscripts/

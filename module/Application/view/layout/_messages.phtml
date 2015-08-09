@@ -1,0 +1,38 @@
+<?php if (count($this->succ) > 0) : ?>
+
+    <script type="text/javascript">
+        $(function () {
+            var messages = ko.toJS(<?php echo json_encode($this->succ); ?>);
+            toastrSuccessFromList(messages);
+        });
+    </script>
+
+<?php endif; if (count($this->err) > 0) : ?>
+
+    <script type="text/javascript">
+        $(function () {
+            var messages = ko.toJS(<?php echo json_encode($this->err); ?>);
+            toastrErrorFromList(messages);
+        });
+    </script>
+    
+<?php endif; if (count($this->info) > 0) : ?>
+
+    <script type="text/javascript">
+        $(function () {
+            var messages = ko.toJS(<?php echo json_encode($this->info); ?>);
+            toastrInfoFromList(messages);
+        });
+    </script>
+    
+<?php endif; if (count($this->warning) > 0) : ?>
+
+    <script type="text/javascript">
+        $(function () {
+            var messages = ko.toJS(<?php echo json_encode($this->info); ?>);
+            toastrWarningFromList(messages);
+        });
+    </script>
+    
+<?php endif;
+
