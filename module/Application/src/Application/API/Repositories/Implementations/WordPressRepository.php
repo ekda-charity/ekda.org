@@ -167,7 +167,7 @@ namespace Application\API\Repositories\Implementations {
         }
         
         public function fetchPostsSidebarInfo(SearchArgs $args) {
-            $sidebarInfo = null;
+            $sidebarInfo = [];
             $category = $this->fetchCategoryBySlug($args->slug);
             if($category->getTermid() != null) {
                 
@@ -182,7 +182,7 @@ namespace Application\API\Repositories\Implementations {
                 
                 while(have_posts()): the_post();
                     $post = get_post();
-                    $sidebarInfo[$post->ID] = new Post($post);
+                    $sidebarInfo[] = new Post($post);
                 endwhile;
                 
                 //wp_reset_query();

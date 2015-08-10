@@ -1,6 +1,8 @@
 <?php
 namespace Application {
 
+    use Application\API\Canonicals\General\Constants;
+    
     return array(
         'controllers' => array(
             'invokables' => array(
@@ -113,6 +115,13 @@ namespace Application {
         
         'navigation' => array(
             'default' => array(
+                'preview' => array(
+                    'id' => Constants::PREVIEW_ID,
+                    'label' => 'Preview',
+                    'controller' => 'Index',
+                    'action' => 'preview',
+                    'visible' => false,
+                ),                
                 'Home' => array(
                     'id' => 'Home',
                     'label' => 'Home',
@@ -136,6 +145,18 @@ namespace Application {
                     'label' => 'Sponsors',
                     'controller' => 'Index',
                     'action' => 'sponsors',
+                ),
+                'Donate' => array(
+                    'id' => 'Donate',
+                    'label' => 'Donate',
+                    'controller' => 'Index',
+                    'action' => 'donate',
+                ),
+                'Contacts' => array(
+                    'id' => 'Contacts',
+                    'label' => 'Contact us',
+                    'controller' => 'Index',
+                    'action' => 'contacts',
                 ),
             ),
         ),

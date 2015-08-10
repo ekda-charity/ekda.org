@@ -1,0 +1,17 @@
+<script>
+    $(function() {
+        var inputData = ko.toJS(<?php echo $this->model; ?>);
+        var dom = document.getElementById("EntryContentNode");
+        var obj = new ekda.index.PostsModel(inputData);
+        ko.applyBindings(obj, dom);
+    });
+</script>
+
+<h2>About Us</h2>
+<hr/>
+<div data-bind="foreach: posts">
+    <div class="post-item">
+        <h3 data-bind="html: title"></h3>
+        <div data-bind="html: filteredcontent"></div>
+    </div>    
+</div>        

@@ -8,5 +8,7 @@ namespace Application\API\Canonicals\WordPress {
         const ABOUT_US  = 'about-us';
         const PROJECTS  = 'projects';
         const SPONSORS  = 'sponsors';
+        const DONATE    = 'donate';
+        const CONTACTS  = 'contact-us';
     }
 }

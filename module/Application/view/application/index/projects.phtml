@@ -1,0 +1,34 @@
+<script>
+    $(function() {
+        var inputData = ko.toJS(<?php echo $this->model; ?>);
+        var dom = document.getElementById("EntryContentNode");
+        var obj = new ekda.index.PostsModel(inputData);
+        ko.applyBindings(obj, dom);
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="side-bar">
+            <h3 class="pointer-cursor" data-bind="click: selectAllPosts">Projects</h3>
+            <ul class="navigation" data-bind="foreach: sidebar">
+                <li data-bind="click: $parent.selectPost">
+                    <a href="#" data-bind="css: {'active' : active }, text: title"></a>
+                </li>
+            </ul> 
+        </div>
+        
+    </div>
+    <div class="col-md-10" style="border-left: 1px solid #999;">
+        <h2 class="pointer-cursor" data-bind="click: selectAllPosts">Our Projects</h2>
+        <hr/>
+        <div data-bind="foreach: currentPosts">
+            <div class="post-item">
+                <h3 data-bind="html: title"></h3>
+                <div data-bind="html: content"></div>
+            </div>    
+        </div>        
+    </div>
+    
+</div>
+

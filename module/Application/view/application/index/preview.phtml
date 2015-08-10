@@ -1,0 +1,19 @@
+<script>
+    $(function() {
+        var inputData = ko.toJS(<?php echo $this->model; ?>);
+        var dom = document.getElementById("EntryContentNode");
+        var obj = new ekda.index.PostsModel(inputData);
+        ko.applyBindings(obj, dom);
+    });
+</script>
+
+<div id="PreviewNode" class="row">
+    
+    <div class="col-md-12">
+        <h2>Preview</h2>
+
+        <div data-bind="foreach: posts">
+            <?php echo $this->partial("layout/wppost"); ?>
+        </div>
+    </div>
+</div>
