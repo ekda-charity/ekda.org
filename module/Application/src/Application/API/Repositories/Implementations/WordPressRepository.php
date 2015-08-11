@@ -115,7 +115,7 @@ namespace Application\API\Repositories\Implementations {
         }
         
         public function fetchMonthlySidebarInfo(SearchArgs $args) {
-            $sidebarInfo = null;
+            $tempList = [];
             $category = $this->fetchCategoryBySlug($args->slug);
             
             if($category->getTermid() != null) {
@@ -133,17 +133,34 @@ namespace Application\API\Repositories\Implementations {
                     $post = get_post();
                     $date = getdate(strtotime($post->post_date));
                     $y = $date['year'];
-                    $monthnum = $date['year'].str_pad($date['mon'], 2, "0", STR_PAD_LEFT);
+                    $m = $date['mon'];
+                    $month = new \DateTime("$y-$m-01");
+                    $monthnum = $y.str_pad($m, 2, "0", STR_PAD_LEFT);
 
-                    $sidebarInfo[$y][$monthnum]['month']  = $date['month'];
-                    $sidebarInfo[$y][$monthnum]['date']  = new \DateTime($date['year'] . "-" . $date['mon'] . "-01");
-                    $sidebarInfo[$y][$monthnum]['count']++;
+                    $tempList[$monthnum]['month']  = $month;
+                    $tempList[$monthnum]['posts'][] = new Post($post);
                 endwhile;
                 
                 //wp_reset_query();                
             }
+
+            uksort($tempList, function($a, $b){
+                if ($a > $b) {
+                    return -1;
+                } else if ($a < $b) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
             
-            return $sidebarInfo;
+            $sideBarInfo = [];
+            
+            foreach ($tempList as $key => $val) {
+                $sideBarInfo[] = $val;
+            }
+            
+            return $sideBarInfo;
         }
 
         public function fetchChildCategories($slug) {
