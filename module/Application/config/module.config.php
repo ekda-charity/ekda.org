@@ -140,6 +140,12 @@ namespace Application {
                     'controller' => 'Index',
                     'action' => 'projects',
                 ),
+                'News' => array(
+                    'id' => 'News',
+                    'label' => 'News',
+                    'controller' => 'Index',
+                    'action' => 'news',
+                ),
                 'Sponsors' => array(
                     'id' => 'Sponsors',
                     'label' => 'Sponsors',
