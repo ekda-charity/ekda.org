@@ -2,7 +2,7 @@
     $(function() {
         var inputData = ko.toJS(<?php echo $this->model; ?>);
         var dom = document.getElementById("EntryContentNode");
-        var obj = new ekda.index.PostsModel(inputData);
+        var obj = new ekda.index.IndexModel(inputData);
         ko.applyBindings(obj, dom);
     });
 </script>
@@ -10,3 +10,102 @@
 <div data-bind="foreach: posts">
     <p data-bind="html: content"></p>
 </div>
+
+<h2>Online Donation (Preferred)</h2>
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th class="col-md-6">Animal</th>
+            <th class="col-md-3">Qty</th>
+            <th class="col-md-3 text-right">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sheep</td>
+            <td><input type="text" class="form-control" value="1" /></td>
+            <td class="text-right" data-bind="text: 40"></td>
+        </tr>
+        <tr>
+            <td>Cow</td>
+            <td><input type="text" class="form-control" value="" /></td>
+            <td class="text-right" data-bind="text: 0"></td>
+        </tr>
+        <tr>
+            <td>Camel</td>
+            <td><input type="text" class="form-control" value="" /></td>
+            <td class="text-right" data-bind="text: 0"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="text-right" data-bind="text: 40"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" data-bind="checked: addSpecialInstructions"> Add Instructions (optional)
+                </label>
+            </td>
+            <td class="text-right">
+                <button class="btn btn-primary btn-sm ladda-button" 
+                        data-style="zoom-out"
+                        data-bind="disable: addSpecialInstructions">
+                    <span class="ladda-label">Donate</span>
+                </button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<table class="table table-condensed" data-bind="visible: addSpecialInstructions">
+    <tbody>
+        <tr>
+            <td class="col-md-3">Full Name</td>
+            <td class="col-md-9"><input type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td><input type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Instructions</td>
+            <td><textarea type="text" class="form-control" rows="6"></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-right">
+                <button class="btn btn-primary btn-sm ladda-button" 
+                        data-style="zoom-out"
+                        >
+                    <span class="ladda-label">Donate</span>
+                </button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<hr/>
+
+<h2>Manual Bank Donation</h2>
+<p>You can also donate directly to the Bank. Please <strong>MAKE SURE TO REFERENCE QURBANI</strong>, and also let us know by sending an email 
+to <strong>rahman.mukras@ekda.org</strong>. Our details are:
+
+<ul>
+<li><strong>Bank name:</strong> Natwest</li>
+<li><strong>Branch:</strong> Natwest Aberdeen, 262 Union Street, Aberdeen, United Kingdom. AB10 1TP.</li>
+<li><strong>Account Name:</strong> EKDA</li>
+<li><strong>Account Number:</strong> 29130700</li>
+<li><strong>Sort Code:</strong> 60-30-22</li>
+<li><strong>IBAN:</strong> GB58NWBK60302229130700</li>
+<li><strong>Swift Code:</strong> NWBKGB2L</li>
+<li><strong>Reference:</strong> QURBANI</li>
+</ul>
+
+</p>
