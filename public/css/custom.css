@@ -132,7 +132,7 @@ h1.underline {
 .post-item .pictures a {text-decoration: none;}
 
 .post-item .sponsors {padding: 0px 0 18px 0;}
-.post-item .sponsors img {border:1px solid #999;margin: 8px 8px 0px 0;padding:10px;}
+.post-item .sponsors img {border:1px solid #999;margin: 8px 8px 0px 0;padding:7px;}
 .post-item .sponsors a {text-decoration: none;}
 
 .kh-image img:hover { opacity: 0.7; }
