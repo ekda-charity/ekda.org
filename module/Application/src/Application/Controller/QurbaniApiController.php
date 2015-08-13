@@ -32,25 +32,21 @@ namespace Application\Controller {
             }
         }
         
-        public function confirmdonation() {
+        public function confirmdonationAction() {
             try {
                 $donationId = $this->params()->fromRoute('p1');
                 $qurbanikey = $this->params()->fromRoute('p2');
                 
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $config = $this->getServiceLocator()->get('Config');
-                
-                $domainname = $config["DomainName"];
-                $qurbaniRepo->confirmDonation($qurbanikey, $donationId);
+                $qurbani = $qurbaniRepo->confirmDonation($qurbanikey, $donationId);
+                $donation = $qurbani->getSheep() . " sheep, " . $qurbani->getCows() . " cows, " . $qurbani->getCamels() . " camels";
 
-                $this->flashMessenger()->addSuccessMessage("Your Donation completed Successfully. May Allah reward you generously. Amin.");
-                return $this->redirect()->toUrl("http://$domainname");
+                $this->flashMessenger()->addSuccessMessage("Your Donation of $donation completed Successfully. May Allah reward you generously. Amin.");
+                return $this->redirect()->toUrl("/");
                 
             } catch (\Exception $ex) {
                 $this->flashMessenger()->addErrorMessage("There was a problem with your donation: " . $ex->getMessage());
-                $config = $this->getServiceLocator()->get('Config');
-                $domainname = $config["DomainName"];
-                return $this->redirect()->toUrl("http://$domainname");
+                return $this->redirect()->toUrl("/");
             }
         }
     }

@@ -9,6 +9,7 @@ namespace("ekda.index").Qurbani = function (data) {
     self.sheepCost = data.sheepcost;
     self.cowCost = data.cowcost;
     self.camelCost = data.camelcost;
+    self.qurbaniseason = !data.qurbaniseason ? false : true;
     
     self.sheep = ko.observable(1);
     self.cows = ko.observable(0);

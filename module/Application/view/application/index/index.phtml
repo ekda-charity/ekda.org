@@ -11,102 +11,104 @@
     <p data-bind="html: content"></p>
 </div>
 
-<h2>Online Donation (Preferred)</h2>
-<div data-bind="with: qurbani">
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th class="col-md-6">Animal</th>
-                <th class="col-md-3">Quantity</th>
-                <th class="col-md-3 text-right">Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Sheep</td>
-                <td><select class="form-control" data-bind="options: numbers, value: sheep"></select></td>
-                <td class="text-right" data-bind="text: (sheep() * sheepCost)"></td>
-            </tr>
-            <tr>
-                <td>Cows</td>
-                <td><select class="form-control" data-bind="options: numbers, value: cows"></select></td>
-                <td class="text-right" data-bind="text: (cows() * cowCost)"></td>
-            </tr>
-            <tr>
-                <td>Camels</td>
-                <td><select class="form-control" data-bind="options: numbers, value: camels"></select></td>
-                <td class="text-right" data-bind="text: (camels() * camelCost)"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td class="text-right"><h2 data-bind="text: '£ '+total()"></h2></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label style="font-weight: normal;">
-                        <input type="checkbox" data-bind="checked: addInstructions"> Instructions (optional)
-                    </label>
-                </td>
-                <td class="text-right">
-                    <button class="btn btn-primary btn-sm ladda-button" 
-                            data-style="zoom-out"
-                            data-bind="disable: addInstructions, click: donate">
-                        <span class="ladda-label">Donate</span>
-                    </button>
-                </td>
-            </tr>
+<div data-bind="visible: qurbani.qurbaniseason">
+    <h2>Online Donation (Preferred)</h2>
+    <div data-bind="with: qurbani">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th class="col-md-6">Animal</th>
+                    <th class="col-md-3">Quantity</th>
+                    <th class="col-md-3 text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sheep</td>
+                    <td><select class="form-control" data-bind="options: numbers, value: sheep"></select></td>
+                    <td class="text-right" data-bind="text: (sheep() * sheepCost)"></td>
+                </tr>
+                <tr>
+                    <td>Cows</td>
+                    <td><select class="form-control" data-bind="options: numbers, value: cows"></select></td>
+                    <td class="text-right" data-bind="text: (cows() * cowCost)"></td>
+                </tr>
+                <tr>
+                    <td>Camels</td>
+                    <td><select class="form-control" data-bind="options: numbers, value: camels"></select></td>
+                    <td class="text-right" data-bind="text: (camels() * camelCost)"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><h2 data-bind="text: '£ '+total()"></h2></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style="font-weight: normal;">
+                            <input type="checkbox" data-bind="checked: addInstructions"> Instructions (optional)
+                        </label>
+                    </td>
+                    <td class="text-right">
+                        <button class="btn btn-primary btn-sm ladda-button" 
+                                data-style="zoom-out"
+                                data-bind="disable: addInstructions, click: donate">
+                            <span class="ladda-label">Donate</span>
+                        </button>
+                    </td>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <table class="table table-condensed" data-bind="visible: addInstructions">
-        <tbody>
-            <tr>
-                <td class="col-md-3">Full Name</td>
-                <td class="col-md-9"><input type="text" class="form-control" data-bind="value: fullname" /></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input type="text" class="form-control" data-bind="value: email" /></td>
-            </tr>
-            <tr>
-                <td>Mobile</td>
-                <td><input type="text" class="form-control" data-bind="value: mobile" /></td>
-            </tr>
-            <tr>
-                <td>Instructions</td>
-                <td><textarea type="text" class="form-control" rows="6" data-bind="value: instructions"></textarea></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="text-right">
-                    <button class="btn btn-primary btn-sm ladda-button" 
-                            data-style="zoom-out"
-                            data-bind="click: donate">
-                        <span class="ladda-label">Donate</span>
-                    </button>
-                </td>
-            </tr>
+        <table class="table table-condensed" data-bind="visible: addInstructions">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">Full Name</td>
+                    <td class="col-md-9"><input type="text" class="form-control" data-bind="value: fullname" /></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" class="form-control" data-bind="value: email" /></td>
+                </tr>
+                <tr>
+                    <td>Mobile</td>
+                    <td><input type="text" class="form-control" data-bind="value: mobile" /></td>
+                </tr>
+                <tr>
+                    <td>Instructions</td>
+                    <td><textarea type="text" class="form-control" rows="6" data-bind="value: instructions"></textarea></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="text-right">
+                        <button class="btn btn-primary btn-sm ladda-button" 
+                                data-style="zoom-out"
+                                data-bind="click: donate">
+                            <span class="ladda-label">Donate</span>
+                        </button>
+                    </td>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <hr/>
+
+    <h2>Donate by Bank and Let us Know</h2>
+    <p>You can also donate directly to the Bank. Please <strong>MAKE SURE TO REFERENCE QURBANI</strong>, and also let us know by sending an email 
+    to <strong>rahman.mukras@ekda.org</strong>. Our details are:</p>
+
+    <ul>
+        <li><strong>Account Name:</strong> EKDA</li>
+        <li><strong>Account Number:</strong> 29130700</li>
+        <li><strong>Sort Code:</strong> 60-30-22</li>
+        <li><strong>Reference:</strong> QURBANI</li>
+        <li>&nbsp;</li>
+        <li><strong>Bank:</strong> Natwest</li>
+        <li><strong>Branch:</strong> Natwest Aberdeen, 262 Union Street, Aberdeen, United Kingdom. AB10 1TP.</li>
+        <li><strong>IBAN:</strong> GB58NWBK60302229130700</li>
+        <li><strong>Swift Code:</strong> NWBKGB2L</li>
+    </ul>
 </div>
-
-<hr/>
-
-<h2>Donate by Bank and Let us Know</h2>
-<p>You can also donate directly to the Bank. Please <strong>MAKE SURE TO REFERENCE QURBANI</strong>, and also let us know by sending an email 
-to <strong>rahman.mukras@ekda.org</strong>. Our details are:</p>
-
-<ul>
-    <li><strong>Account Name:</strong> EKDA</li>
-    <li><strong>Account Number:</strong> 29130700</li>
-    <li><strong>Sort Code:</strong> 60-30-22</li>
-    <li><strong>Reference:</strong> QURBANI</li>
-    <li>&nbsp;</li>
-    <li><strong>Bank:</strong> Natwest</li>
-    <li><strong>Branch:</strong> Natwest Aberdeen, 262 Union Street, Aberdeen, United Kingdom. AB10 1TP.</li>
-    <li><strong>IBAN:</strong> GB58NWBK60302229130700</li>
-    <li><strong>Swift Code:</strong> NWBKGB2L</li>
-</ul>

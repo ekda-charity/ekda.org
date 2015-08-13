@@ -6,6 +6,11 @@ namespace Application\API\Canonicals\Dto {
     class QurbaniDetails { 
         
         /**
+         * @Type("boolean")
+         */
+        public $qurbaniseason;
+        
+        /**
          * @Type("integer")
          */
         public $sheepcost;

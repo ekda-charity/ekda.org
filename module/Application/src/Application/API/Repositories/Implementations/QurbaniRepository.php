@@ -14,6 +14,7 @@ namespace Application\API\Repositories\Implementations {
         public function __construct(EntityManager $em, $qurbaniDetails) {
             parent::__construct($em);
             $this->details = new QurbaniDetails();
+            $this->details->qurbaniseason = $qurbaniDetails["qurbaniseason"];
             $this->details->sheepcost = $qurbaniDetails["sheepcost"];
             $this->details->cowcost = $qurbaniDetails["cowcost"];
             $this->details->camelcost = $qurbaniDetails["camelcost"];
@@ -50,8 +51,9 @@ namespace Application\API\Repositories\Implementations {
                 $qurbani->setDonationid(null);
                 $qurbani->setQurbaniyear($this->details->qurbaniyear);
                 $em->persist($qurbani);
-                return $qurbani->getQurbanikey();
-            });            
+            });
+            
+            return $qurbani->getQurbanikey();
         }
 
         public function confirmDonation($qurbanikey, $donationId) {
@@ -68,7 +70,9 @@ namespace Application\API\Repositories\Implementations {
                     $oneRecord->setDonationid($donationId);
                     $em->merge($oneRecord);
                 }
-            });            
+            }); 
+            
+            return $repo->find($qurbanikey);
         }
 
         public function getQurbaniDetails() {
