@@ -7,7 +7,7 @@ namespace Application {
         'controllers' => array(
             'invokables' => array(
                 'Index'          => 'Application\Controller\IndexController',
-                'GeneralApi'     => 'Application\Controller\GeneralApiController',
+                'QurbaniApi'     => 'Application\Controller\QurbaniApiController',
                 'BatchMail'      => 'Application\Controller\BatchMailController',
             ),
         ),
@@ -58,6 +58,7 @@ namespace Application {
                 'WordPrRepo'        => 'Application\API\Repositories\Factories\WordPressRepositoryFactory',
                 'EMailSvc'          => 'Application\API\Repositories\Factories\EMailServiceFactory',
                 'GMailSvc'          => 'Application\API\Repositories\Factories\GeneralMailingServiceFactory',
+                'QurbaniRepo'       => 'Application\API\Repositories\Factories\QurbaniRepositoryFactory',
             ),
         ),
         'doctrine' => array(

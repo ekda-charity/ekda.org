@@ -10,13 +10,15 @@ namespace Application\Controller {
         
         public function indexAction() {
             $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
+            $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+
             $args = new SearchArgs();
             $args->slug = Slugs::HOME;
             $home = $wpRepo->fetchCategoryPosts($args);
             
             return array('model' => $this->serializer->serialize(array(
-                'posts'    => $home,
+                'posts'          => $home,
+                'qurbanidetails' => $qurbaniRepo->getQurbaniDetails()
             ), 'json'));
         }
         

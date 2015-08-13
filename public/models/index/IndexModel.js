@@ -3,6 +3,6 @@ namespace("ekda.index").IndexModel = function (data) {
     var self = this;
     
     self.posts = data.posts;
-    self.addSpecialInstructions = ko.observable(false);
+    self.qurbani = new ekda.index.Qurbani(data.qurbanidetails);
     
 };

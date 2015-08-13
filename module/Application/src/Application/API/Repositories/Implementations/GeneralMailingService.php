@@ -13,16 +13,14 @@ namespace Application\API\Repositories\Implementations {
         private $emailRepository;
         private $defaultSender;
         private $supportEmail;
-        private $imamsEmail;
         private $domainName;
         private $isNotProduction;
         
-        public function __construct(EntityManager $em, IEMailService $emailRepository, $defaultSender, $supportEmail, $imamsEmail, $domainName) {
+        public function __construct(EntityManager $em, IEMailService $emailRepository, $defaultSender, $supportEmail, $domainName) {
             parent::__construct($em);
             $this->emailRepository = $emailRepository;
             $this->defaultSender = new Email($defaultSender['username'], $defaultSender['password']);
             $this->supportEmail = $supportEmail['username'];
-            $this->imamsEmail = $imamsEmail['username'];
             $this->domainName = $domainName;
             
             $env = (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : (getenv('REDIRECT_APPLICATION_ENV') ? getenv('REDIRECT_APPLICATION_ENV') : 'development'));

@@ -5,7 +5,7 @@ namespace Application\API\Repositories\Implementations {
     use Doctrine\ORM\EntityManager,
         Doctrine\ORM\EntityRepository,
         Doctrine\ORM\Mapping\ClassMetadata,
-            //Application\API\Canonicals\Entity,
+        Application\API\Canonicals\Entity,
         Application\API\Repositories\Base\Repository;
 
     class BaseRepository {
@@ -18,12 +18,12 @@ namespace Application\API\Repositories\Implementations {
         /**
          * @var Repository
          */
-        protected $adCategoryRepo;
+        protected $qurbaniRepo;
         
         public function __construct(EntityManager $em) {
             $this->em = $em;
             
-            //$this->adCategoryRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Adcategory()))));
+            $this->qurbaniRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Qurbani()))));
         }
     }
 }
