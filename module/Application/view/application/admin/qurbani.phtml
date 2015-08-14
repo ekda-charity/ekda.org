@@ -100,13 +100,14 @@
                 <th class="col-md-1">Sheep</th>
                 <th class="col-md-1">Cows</th>
                 <th class="col-md-1">Camels</th>
-                <th class="col-md-6">Donor</th>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-4">Details</th>
                 <th class="col-md-1">ID</th>
                 <th class="col-md-2">Date</th>
             </tr>
         </thead>
 
-        <tbody data-bind="if: (qurbani.length == 0)">
+        <tbody data-bind="if: (results().length == 0)">
             <tr>
                 <td colspan="6"><em>No Donors</em></td>
             </tr>
@@ -117,18 +118,15 @@
                 <td data-bind="text: sheep"></td>
                 <td data-bind="text: cows"></td>
                 <td data-bind="text: camels"></td>
+                <td data-bind="text: fullname"></td>
                 <td>
                     <div>
-                        <strong data-bind="visible: fullname">Dnr:</strong>
-                        <span data-bind="text: fullname"></span>
-                        <span data-bind="visible: fullname"> / </span>
                         <span data-bind="text: mobile"></span>
                         <span data-bind="visible: mobile"> / </span>
                         <span data-bind="text: email"></span>
                     </div>
-                    <div class="top7">
-                        <strong data-bind="visible: instructions">Ins:</strong>
-                        <span data-bind="text: instructions"></span>
+                    <div class="top5">
+                        <em data-bind="text: instructions"></em>
                     </div>
                 </td>
                 <td data-bind="text: donationid"></td>
