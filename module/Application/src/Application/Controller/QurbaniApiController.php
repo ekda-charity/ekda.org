@@ -6,6 +6,12 @@ namespace Application\Controller {
 
     class QurbaniApiController extends BaseController {
         
+        public function __construct() {
+            parent::__construct();
+            header('Access-Control-Allow-Origin: *');
+            header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+        }
+        
         public function checkstockanddonateAction(){
             try {
                 $jsonData = $this->getRequest()->getContent();

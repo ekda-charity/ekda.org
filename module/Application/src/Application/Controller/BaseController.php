@@ -10,7 +10,6 @@ namespace Application\Controller {
     use Application\API\Canonicals\Entity\Ads;
     use Zend\EventManager\EventManagerInterface;
     use Application\API\Canonicals\Entity\Respondents;
-    use Application\API\Canonicals\General\Constants;
 
     class BaseController extends AbstractActionController {
 
