@@ -6,6 +6,23 @@ namespace Application\Controller {
 
     class QurbaniApiController extends BaseController {
         
+        public function checkstockanddonateAction(){
+            try {
+                $jsonData = $this->getRequest()->getContent();
+                $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
+
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                $qurbaniRepo->checkStockAndAddQurbani($data, true);
+                
+                $response = ResponseUtils::createResponse();
+                return $this->jsonResponse($response);
+                
+            } catch (\Exception $ex) {
+                $response = ResponseUtils::createExceptionResponse($ex);
+                return $this->jsonResponse($response);
+            }
+        }
+        
         public function checkstockandinitiatedonationAction(){
             try {
                 $jsonData = $this->getRequest()->getContent();

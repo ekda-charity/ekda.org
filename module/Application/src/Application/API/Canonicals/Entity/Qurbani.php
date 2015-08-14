@@ -105,6 +105,14 @@ class Qurbani
      */
     private $donationid;
 
+    /**
+     * @Type("DateTime<'Y-m-d\TH:i:sO'>")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdDate", type="datetime", nullable=false)
+     */
+    private $createddate;
+    
     function getQurbanikey() { return $this->qurbanikey; }
     function getQurbaniyear() { return $this->qurbaniyear; }
     function getSheep() { return $this->sheep; }
@@ -116,6 +124,7 @@ class Qurbani
     function getMobile() { return $this->mobile; }
     function getInstructions() { return $this->instructions; }
     function getDonationid() { return $this->donationid; }    
+    function getCreateddate() { return $this->createddate; }    
 
     function setQurbanikey($val) { $this->qurbanikey = $val; }
     function setQurbaniyear($val) { $this->qurbaniyear = $val; }    
@@ -128,4 +137,5 @@ class Qurbani
     function setMobile($val) { $this->mobile = $val; }
     function setInstructions($val) { $this->instructions = $val; }
     function setDonationid($val) { $this->donationid = $val; }
+    function setCreateddate($val) { $this->createddate = $val; }
 }

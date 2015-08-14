@@ -5,6 +5,7 @@ namespace Application\Controller {
     use Zend\Captcha;
     use Zend\Mvc\Controller\AbstractActionController;
     use JMS\Serializer\SerializerBuilder;
+    use JMS\Serializer\SerializationContext;
     use Application\API\Canonicals\Dto\Captcha as LocalCaptcha;
     use Application\API\Canonicals\Entity\Ads;
     use Zend\EventManager\EventManagerInterface;
@@ -38,7 +39,10 @@ namespace Application\Controller {
         }
         
         protected function jsonResponse($data) {
-            $content = $this->serializer->serialize($data, 'json');
+            $context = new SerializationContext();
+            $context->setSerializeNull(true);
+            $content = $this->serializer->serialize($data, 'json', $context);
+            
             $this->response->setContent($content);
             return $this->response;
         }

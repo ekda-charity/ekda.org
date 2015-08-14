@@ -2,7 +2,7 @@ var app = app || {};
 app.index = app.index || {};
 app.index.Models = app.index.Models || {};
 
-namespace("ekda.index").Qurbani = function (data) {
+namespace("ekda.index").Qurbani = function (data, confirmDonation) {
     var self = this;
     
     self.numbers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
@@ -10,6 +10,7 @@ namespace("ekda.index").Qurbani = function (data) {
     self.cowCost = data.cowcost;
     self.camelCost = data.camelcost;
     self.qurbaniseason = !data.qurbaniseason ? false : true;
+    self.confirmDonation = !confirmDonation ? false : true;
     
     self.sheep = ko.observable(1);
     self.cows = ko.observable(0);
@@ -63,7 +64,7 @@ namespace("ekda.index").Qurbani = function (data) {
             toastrErrorFromList(errors, "Validation Errors");
             return;
         } else {
-            var url = "/api/QurbaniApi/checkstockandinitiatedonation";
+            var url = "/api/QurbaniApi/" + (self.confirmDonation ? "checkstockanddonate" : "checkstockandinitiatedonation");
             var obj = ko.toJSON({
                 sheep: self.sheep(),
                 cows: self.cows(),
@@ -82,6 +83,8 @@ namespace("ekda.index").Qurbani = function (data) {
                 lad.stop();
                 if (!response.success) {
                     toastrErrorFromList(response.errors, "Validation Failed");
+                } else if (self.confirmDonation) {
+                    toastrSuccess("Donation was successfull");
                 } else {
                     document.location.href = response.item;
                 }

@@ -1,0 +1,139 @@
+<script>
+    $(function() {
+        var inputData = ko.toJS(<?php echo $this->model; ?>);
+        var dom = document.getElementById("EntryContentNode");
+        var obj = new ekda.admin.QurbaniAdminModel(inputData);
+        ko.applyBindings(obj, dom);
+    });
+</script>
+
+<div data-bind="visible: qurbani.qurbaniseason">
+    <h2>Online Donation (Preferred)</h2>
+    <div data-bind="with: qurbani">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th class="col-md-6">Animal</th>
+                    <th class="col-md-3">Quantity</th>
+                    <th class="col-md-3 text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sheep</td>
+                    <td><select class="form-control" data-bind="options: numbers, value: sheep"></select></td>
+                    <td class="text-right" data-bind="text: (sheep() * sheepCost)"></td>
+                </tr>
+                <tr>
+                    <td>Cows</td>
+                    <td><select class="form-control" data-bind="options: numbers, value: cows"></select></td>
+                    <td class="text-right" data-bind="text: (cows() * cowCost)"></td>
+                </tr>
+                <tr>
+                    <td>Camels</td>
+                    <td><select class="form-control" data-bind="options: numbers, value: camels"></select></td>
+                    <td class="text-right" data-bind="text: (camels() * camelCost)"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><h2 data-bind="text: '£ '+total()"></h2></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style="font-weight: normal;">
+                            <input type="checkbox" data-bind="checked: addInstructions"> Instructions (optional)
+                        </label>
+                    </td>
+                    <td class="text-right">
+                        <button class="btn btn-primary btn-sm ladda-button" 
+                                data-style="zoom-out"
+                                data-bind="disable: addInstructions, click: donate">
+                            <span class="ladda-label">Donate</span>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table table-condensed" data-bind="visible: addInstructions">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">Full Name</td>
+                    <td class="col-md-9"><input type="text" class="form-control" data-bind="value: fullname" /></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" class="form-control" data-bind="value: email" /></td>
+                </tr>
+                <tr>
+                    <td>Mobile</td>
+                    <td><input type="text" class="form-control" data-bind="value: mobile" /></td>
+                </tr>
+                <tr>
+                    <td>Instructions</td>
+                    <td><textarea type="text" class="form-control" rows="6" data-bind="value: instructions"></textarea></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="text-right">
+                        <button class="btn btn-primary btn-sm ladda-button" 
+                                data-style="zoom-out"
+                                data-bind="click: donate">
+                            <span class="ladda-label">Donate</span>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <hr/>
+
+    <h2>Current Donors</h2>
+    
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th class="col-md-1">Sheep</th>
+                <th class="col-md-1">Cows</th>
+                <th class="col-md-1">Camels</th>
+                <th class="col-md-6">Donor</th>
+                <th class="col-md-1">ID</th>
+                <th class="col-md-2">Date</th>
+            </tr>
+        </thead>
+
+        <tbody data-bind="if: (qurbani.length == 0)">
+            <tr>
+                <td colspan="6"><em>No Donors</em></td>
+            </tr>
+        </tbody>
+        
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td data-bind="text: sheep"></td>
+                <td data-bind="text: cows"></td>
+                <td data-bind="text: camels"></td>
+                <td>
+                    <div>
+                        <strong data-bind="visible: fullname">Dnr:</strong>
+                        <span data-bind="text: fullname"></span>
+                        <span data-bind="visible: fullname"> / </span>
+                        <span data-bind="text: mobile"></span>
+                        <span data-bind="visible: mobile"> / </span>
+                        <span data-bind="text: email"></span>
+                    </div>
+                    <div class="top7">
+                        <strong data-bind="visible: instructions">Ins:</strong>
+                        <span data-bind="text: instructions"></span>
+                    </div>
+                </td>
+                <td data-bind="text: donationid"></td>
+                <td data-bind="text: moment(createddate).format('YYYY-MM-DD')"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

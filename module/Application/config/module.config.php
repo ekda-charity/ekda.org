@@ -7,6 +7,7 @@ namespace Application {
         'controllers' => array(
             'invokables' => array(
                 'Index'          => 'Application\Controller\IndexController',
+                'Admin'          => 'Application\Controller\AdminController',
                 'QurbaniApi'     => 'Application\Controller\QurbaniApiController',
                 'BatchMail'      => 'Application\Controller\BatchMailController',
             ),
@@ -124,7 +125,7 @@ namespace Application {
                     'visible' => false,
                 ),                
                 'Home' => array(
-                    'id' => 'Home',
+                    'id' => Constants::HOME_PAGE_NAVIGATION_ID,
                     'label' => 'Home',
                     'controller' => 'Index',
                     'action' => 'index',
