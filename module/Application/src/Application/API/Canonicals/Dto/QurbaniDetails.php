@@ -48,6 +48,6 @@ namespace Application\API\Canonicals\Dto {
         /**
          * @Type("string")
          */
-        public $qurbaniyear;
+        public $qurbanimonth;
     }
 }

@@ -29,9 +29,9 @@ class Qurbani
      * @Type("string")
      * @var string
      *
-     * @ORM\Column(name="qurbaniyear", type="string", length=4, nullable=false)
+     * @ORM\Column(name="qurbanimonth", type="string", length=10, nullable=false)
      */
-    private $qurbaniyear;
+    private $qurbanimonth;
     
     /**
      * @Type("integer")
@@ -114,7 +114,7 @@ class Qurbani
     private $createddate;
     
     function getQurbanikey() { return $this->qurbanikey; }
-    function getQurbaniyear() { return $this->qurbaniyear; }
+    function getQurbanimonth() { return $this->qurbanimonth; }
     function getSheep() { return $this->sheep; }
     function getCows() { return $this->cows; }
     function getCamels() { return $this->camels; }
@@ -127,7 +127,7 @@ class Qurbani
     function getCreateddate() { return $this->createddate; }    
 
     function setQurbanikey($val) { $this->qurbanikey = $val; }
-    function setQurbaniyear($val) { $this->qurbaniyear = $val; }    
+    function setQurbanimonth($val) { $this->qurbanimonth = $val; }    
     function setSheep($val) { $this->sheep = $val; }
     function setCows($val) { $this->cows = $val; }
     function setCamels($val) { $this->camels = $val; }

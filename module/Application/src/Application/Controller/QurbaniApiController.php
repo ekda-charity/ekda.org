@@ -6,12 +6,6 @@ namespace Application\Controller {
 
     class QurbaniApiController extends BaseController {
         
-        public function __construct() {
-            parent::__construct();
-            header('Access-Control-Allow-Origin: *');
-            header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-        }
-        
         public function checkstockanddonateAction(){
             try {
                 $jsonData = $this->getRequest()->getContent();
@@ -44,33 +38,6 @@ namespace Application\Controller {
                 $shortUrl = $qurbaniDetails->shorturl;
                 $amount = $data->getTotal();
                 $exitUrl = "http://$domainname/api/QurbaniApi/confirmdonation/JUSTGIVING-DONATION-ID/$qurbanikey";
-                $redirectUrl = "http://www.justgiving.com/$shortUrl/4w350m3/donate?amount=$amount&exitUrl=$exitUrl";
-
-                $response = ResponseUtils::createSingleFetchResponse($redirectUrl);
-                return $this->jsonResponse($response);
-                
-            } catch (\Exception $ex) {
-                $response = ResponseUtils::createExceptionResponse($ex);
-                return $this->jsonResponse($response);
-            }
-        }
-        
-        public function checkstockandinitiatedonationfromamicAction() {
-            try {
-                $jsonData = $this->getRequest()->getContent();
-                $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
-
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $config = $this->getServiceLocator()->get('Config');
-
-                $exitDomainname = $this->params()->fromRoute('p1');
-                $apiDomainname = $config["DomainName"];
-                $qurbaniDetails = $qurbaniRepo->getQurbaniDetails();
-                $qurbanikey = $qurbaniRepo->checkStockAndAddQurbani($data);
-                
-                $shortUrl = $qurbaniDetails->shorturl;
-                $amount = $data->getTotal();
-                $exitUrl = "http://$apiDomainname/api/QurbaniApi/confirmdonation/JUSTGIVING-DONATION-ID/$qurbanikey/$exitDomainname";
                 $redirectUrl = "http://www.justgiving.com/$shortUrl/4w350m3/donate?amount=$amount&exitUrl=$exitUrl";
 
                 $response = ResponseUtils::createSingleFetchResponse($redirectUrl);

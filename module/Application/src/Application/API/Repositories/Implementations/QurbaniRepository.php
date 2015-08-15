@@ -27,7 +27,7 @@ namespace Application\API\Repositories\Implementations {
             $this->details->totalcows = $qurbaniDetails["totalcows"];
             $this->details->totalcamels = $qurbaniDetails["totalcamels"];
             $this->details->shorturl = $qurbaniDetails["shorturl"];
-            $this->details->qurbaniyear = $qurbaniDetails["qurbaniyear"];
+            $this->details->qurbanimonth = $qurbaniDetails["qurbanimonth"];
         }
 
         public function checkStockAndAddQurbani(Qurbani $qurbani, $confirmDonation = false) {
@@ -53,7 +53,7 @@ namespace Application\API\Repositories\Implementations {
             }
 
             $qurbani->setDonationid($confirmDonation ? QurbaniRepository::DONATION_ID : null);
-            $qurbani->setQurbaniyear($this->details->qurbaniyear);
+            $qurbani->setQurbanimonth($this->details->qurbanimonth);
             
             $this->em->transactional(function(EntityManager $em) use($qurbani) {
                 $em->persist($qurbani);
@@ -87,28 +87,28 @@ namespace Application\API\Repositories\Implementations {
 
         public function getPurchasedCamels() {
             $dql = "SELECT SUM(q.camels) AS animals FROM Application\API\Canonicals\Entity\Qurbani q " .
-                   "WHERE q.qurbaniyear = ?1 AND q.donationid IS NOT NULL";
+                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL";
             
             return $this->em->createQuery($dql)
-                    ->setParameter(1, $this->details->qurbaniyear)
+                    ->setParameter(1, $this->details->qurbanimonth)
                     ->getSingleScalarResult();            
         }
 
         public function getPurchasedCows() {
             $dql = "SELECT SUM(q.cows) AS animals FROM Application\API\Canonicals\Entity\Qurbani q " .
-                   "WHERE q.qurbaniyear = ?1 AND q.donationid IS NOT NULL";
+                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL";
             
             return $this->em->createQuery($dql)
-                    ->setParameter(1, $this->details->qurbaniyear)
+                    ->setParameter(1, $this->details->qurbanimonth)
                     ->getSingleScalarResult();            
         }
 
         public function getPurchasedSheep() {
             $dql = "SELECT SUM(q.sheep) AS animals FROM Application\API\Canonicals\Entity\Qurbani q " .
-                   "WHERE q.qurbaniyear = ?1 AND q.donationid IS NOT NULL";
+                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL";
             
             return $this->em->createQuery($dql)
-                    ->setParameter(1, $this->details->qurbaniyear)
+                    ->setParameter(1, $this->details->qurbanimonth)
                     ->getSingleScalarResult();            
         }
 
@@ -123,7 +123,7 @@ namespace Application\API\Repositories\Implementations {
 
                 foreach(array(QurbaniRepository::CNT, QurbaniRepository::RST) as $index) {
                     $query[$index] = $this->qurbaniRepo->repository->createQueryBuilder("q")
-                            ->where("q.qurbaniyear = :pQurbaniyear")->setParameter("pQurbaniyear", $this->details->qurbaniyear);
+                            ->where("q.qurbanimonth = :pQurbaniyear")->setParameter("pQurbaniyear", $this->details->qurbanimonth);
                     
                     if ($purchasedOnly) {
                         $query[$index] = $query[$index]->andWhere("q.donationid IS NOT NULL");

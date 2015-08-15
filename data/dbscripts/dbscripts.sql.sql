@@ -1,7 +1,7 @@
 
 CREATE TABLE IF NOT EXISTS `Qurbanis` (
   `qurbaniKey` INT(11) NOT NULL AUTO_INCREMENT,
-  `qurbaniyear` VARCHAR(4) NOT NULL,
+  `qurbanimonth` VARCHAR(10) NOT NULL,
   `sheep` INT(11) NOT NULL,
   `cows` INT(11) NOT NULL,
   `camels` INT(11) NOT NULL,
@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `Qurbanis` (
   `mobile` VARCHAR(100) NULL DEFAULT NULL,
   `instructions` TEXT NULL DEFAULT NULL,
   `donationid` VARCHAR(100) NULL DEFAULT NULL,
+  `createdDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`qurbaniKey`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
