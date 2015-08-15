@@ -48,7 +48,7 @@ namespace Application\API\Repositories\Implementations {
                 <head></head>
                 <body>
                 <p>
-                Salam Aleikum,<br/>
+                Salam Aleikum " . $qurbani->getFullname() . ",<br/>
                 This is to confirm that we have received your Qurbani Donation to East Africa as follows:
                 <ul>
                 <li><strong>Sheep:</strong> " . $qurbani->getSheep() . "</li>
@@ -56,10 +56,17 @@ namespace Application\API\Repositories\Implementations {
                 <li><strong>Camels:</strong> " . $qurbani->getCamels() . "</li>
                 <li><strong>Instructions:</strong> " . $qurbani->getInstructions() . "</li>
                 </ul>
-                Inshaa Allah the EKDA charity (www.ekda.org) will send you a Confirmation once the Sacrifice has been performed.<br/>
+                Inshaa Allah we will send you a Confirmation once the Sacrifice has been performed.<br/>
                 <br/>
-                Jazakallah Kheir<br/>
-                Aberdeen Mosque and Islamic Centre on Behalf of EKDA<br/>
+                Shukran<br/>
+                <br/>
+                Rahman Mukras<br/>
+                Secretary, EKDA<br/>
+                11B Sunnybank Road<br/>
+                Aberdeen, United Kingdom<br/>
+                AB15 3NJ<br/>
+                www.ekda.org<br/>
+                Scottish Charity Reg No: SC041294<br/>
                 </p>
                 </body>
                 </html>
