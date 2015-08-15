@@ -46,7 +46,7 @@
                 <tr>
                     <td colspan="2">
                         <label style="font-weight: normal;">
-                            <input type="checkbox" data-bind="checked: addInstructions"> Instructions (optional)
+                            <input type="checkbox" data-bind="checked: addInstructions"> Instructions on how to perform the Qurbani (optional)
                         </label>
                     </td>
                     <td class="text-right">
@@ -60,7 +60,7 @@
 
             </tbody>
         </table>
-
+        <form autocomplete="on">
         <table class="table table-condensed" data-bind="visible: addInstructions">
             <tbody>
                 <tr>
@@ -76,7 +76,7 @@
                     <td><input type="text" class="form-control" data-bind="value: mobile" /></td>
                 </tr>
                 <tr>
-                    <td>Names to Mention</td>
+                    <td>Instructions</td>
                     <td><textarea type="text" class="form-control" rows="6" data-bind="value: instructions"></textarea></td>
                 </tr>
                 <tr>
@@ -92,6 +92,7 @@
 
             </tbody>
         </table>
+        </form>
     </div>
 
     <hr/>
