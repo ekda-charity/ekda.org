@@ -19,11 +19,16 @@ namespace Application\API\Repositories\Implementations {
          * @var Repository
          */
         protected $qurbaniRepo;
+        /**
+         * @var Repository
+         */
+        protected $emailsRepo;
         
         public function __construct(EntityManager $em) {
             $this->em = $em;
             
             $this->qurbaniRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Qurbani()))));
+            $this->emailsRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Emails()))));
         }
     }
 }

@@ -6,5 +6,6 @@ namespace Application\API\Repositories\Interfaces {
     
     interface IGeneralMailingService {
         public function sendEmailRequest(EmailRequest $request);
+        public function qurbaniConfrimationAlert($qurbaniKey);
     }
 }

@@ -38,5 +38,35 @@ namespace Application\API\Repositories\Implementations {
                 $this->emailRepository->sendMail($this->defaultSender, $request->recipient, $request->subject, $request->textbody, $request->htmlbody);
             }
         }
+        
+        public function qurbaniConfrimationAlert($qurbaniKey) {
+            $qurbani = $this->qurbaniRepo->fetch($qurbaniKey);
+
+            $subject = "Your Qurbani Donation to East Africa";
+            $htmlBody = "
+                <html>
+                <head></head>
+                <body>
+                <p>
+                Salam Aleikum,<br/>
+                This is to confirm that we have received your Qurbani Donation to East Africa as follows:
+                <ul>
+                <li><strong>Sheep:</strong> " . $qurbani->getSheep() . "</li>
+                <li><strong>Cows:</strong> " . $qurbani->getCows() . "</li>
+                <li><strong>Camels:</strong> " . $qurbani->getCamels() . "</li>
+                <li><strong>Instructions:</strong> " . $qurbani->getInstructions() . "</li>
+                </ul>
+                Inshaa Allah the EKDA charity (www.ekda.org) will send you a Confirmation once the Sacrifice has been performed.<br/>
+                <br/>
+                Jazakallah Kheir<br/>
+                Aberdeen Mosque and Islamic Centre on Behalf of EKDA<br/>
+                </p>
+                </body>
+                </html>
+            ";
+
+            $recipients = $this->isNotProduction ? $this->supportEmail : $qurbani->getEmail();
+            $this->emailRepository->sendMail($this->defaultSender, $recipients, $subject, null, $htmlBody);
+        }
     }
 }

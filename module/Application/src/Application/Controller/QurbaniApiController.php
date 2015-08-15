@@ -12,7 +12,12 @@ namespace Application\Controller {
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
 
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $qurbaniRepo->checkStockAndAddQurbani($data, true);
+                $qurbanikey = $qurbaniRepo->checkStockAndAddQurbani($data, true);
+                
+                if ($data->getEmail() != null) {
+                    $gMailSvc = $this->getServiceLocator()->get('GMailSvc');
+                    $gMailSvc->qurbaniConfrimationAlert($qurbanikey);
+                }
                 
                 $response = ResponseUtils::createResponse();
                 return $this->jsonResponse($response);
@@ -53,18 +58,18 @@ namespace Application\Controller {
             try {
                 $donationId = $this->params()->fromRoute('p1');
                 $qurbanikey = $this->params()->fromRoute('p2');
-                $exitDomainname = $this->params()->fromRoute('p3');
                 
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
                 $qurbani = $qurbaniRepo->confirmDonation($qurbanikey, $donationId);
-                
-                if (isset($exitDomainname)) {
-                    return $this->redirect()->toUrl("http://$exitDomainname");
-                } else {
-                    $donation = $qurbani->getSheep() . " sheep, " . $qurbani->getCows() . " cows, " . $qurbani->getCamels() . " camels";
-                    $this->flashMessenger()->addSuccessMessage("Your Donation of $donation completed Successfully. May Allah reward you generously. Amin.");
-                    return $this->redirect()->toUrl("/");
+
+                if ($qurbani->getEmail() != null) {
+                    $gMailSvc = $this->getServiceLocator()->get('GMailSvc');
+                    $gMailSvc->qurbaniConfrimationAlert($qurbani->getQurbanikey());
                 }
+                
+                $donation = $qurbani->getSheep() . " sheep, " . $qurbani->getCows() . " cows, " . $qurbani->getCamels() . " camels";
+                $this->flashMessenger()->addSuccessMessage("Your Donation of $donation completed Successfully. May Allah reward you generously. Amin.");
+                return $this->redirect()->toUrl("/");
                 
             } catch (\Exception $ex) {
                 $this->flashMessenger()->addErrorMessage("There was a problem with your donation: " . $ex->getMessage());
