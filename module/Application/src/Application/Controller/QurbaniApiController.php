@@ -55,7 +55,7 @@ namespace Application\Controller {
             }
         }
         
-        public function checkstockandinitiatedonationfromamic() {
+        public function checkstockandinitiatedonationfromamicAction() {
             try {
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
