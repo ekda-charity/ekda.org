@@ -16,8 +16,11 @@ namespace Application\Controller {
             $context->setSerializeNull(true);
             
             return array('model' => $this->serializer->serialize(array(
-                'qurbani'        => $qurbaniRepo->search(0, PHP_INT_MAX, true),
-                'qurbanidetails' => $qurbaniRepo->getQurbaniDetails()
+                'qurbani'         => $qurbaniRepo->search(0, PHP_INT_MAX, true),
+                'qurbanidetails'  => $qurbaniRepo->getQurbaniDetails(),
+                'purchasedSheep'  => $qurbaniRepo->getPurchasedSheep(),
+                'purchasedCows'   => $qurbaniRepo->getPurchasedCows(),
+                'purchasedCamels' => $qurbaniRepo->getPurchasedCamels()
             ), 'json', $context));
         }
     }
