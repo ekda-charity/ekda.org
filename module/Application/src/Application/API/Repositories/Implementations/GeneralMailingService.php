@@ -59,12 +59,10 @@ namespace Application\API\Repositories\Implementations {
                 Inshaa Allah we will send you a Confirmation once the Sacrifice has been performed.<br/>
                 <br/>
                 Shukran<br/>
-                <br/>
-                Rahman Mukras<br/>
-                Secretary, EKDA<br/>
+                The Projects Team, EKDA<br/>
                 11B Sunnybank Road<br/>
                 Aberdeen, United Kingdom<br/>
-                AB15 3NJ<br/>
+                AB24 3NJ<br/>
                 www.ekda.org<br/>
                 Scottish Charity Reg No: SC041294<br/>
                 </p>
