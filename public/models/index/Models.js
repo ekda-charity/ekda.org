@@ -84,6 +84,13 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation) {
                 if (!response.success) {
                     toastrErrorFromList(response.errors, "Validation Failed");
                 } else if (self.confirmDonation) {
+                    self.sheep(null);
+                    self.cows(null);
+                    self.camels(null);
+                    self.fullname(null);
+                    self.email(null);
+                    self.mobile(null);
+                    self.instructions(null);
                     toastrSuccess("Donation was successfull");
                 } else {
                     document.location.href = response.item;

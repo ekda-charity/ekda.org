@@ -133,12 +133,21 @@
                 <td data-bind="text: moment(createddate).format('YYYY-MM-DD')"></td>
             </tr>
         </tbody>
-        
-        <tbody>
+
+        <tbody style="background: #efe;">
             <tr>
-                <td data-bind="text: (purchasedSheep + ' / ' + details.totalsheep)"></td>
-                <td data-bind="text: (purchasedCows + ' / ' + details.totalcows)"></td>
-                <td data-bind="text: (purchasedCamels + ' / ' + details.totalcamels)"></td>
+                <th data-bind="text: purchasedSheep"></th>
+                <th data-bind="text: purchasedCows"></th>
+                <th data-bind="text: purchasedCamels"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th data-bind="text: details.totalsheep"></th>
+                <th data-bind="text: details.totalcows"></th>
+                <th data-bind="text: details.totalcamels"></th>
                 <td></td>
                 <td></td>
                 <td></td>
