@@ -49,5 +49,10 @@ namespace Application\API\Canonicals\Dto {
          * @Type("string")
          */
         public $qurbanimonth;
+        
+        /**
+         * @Type("DateTime<'Y-m-d\TH:i:sO'>")
+         */
+        public $disableinstructionsdate;
     }
 }

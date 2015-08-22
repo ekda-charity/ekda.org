@@ -28,6 +28,7 @@ namespace Application\API\Repositories\Implementations {
             $this->details->totalcamels = $qurbaniDetails["totalcamels"];
             $this->details->shorturl = $qurbaniDetails["shorturl"];
             $this->details->qurbanimonth = $qurbaniDetails["qurbanimonth"];
+            $this->details->disableinstructionsdate = $qurbaniDetails["disableinstructionsdate"];
         }
 
         public function checkStockAndAddQurbani(Qurbani $qurbani, $confirmDonation = false) {

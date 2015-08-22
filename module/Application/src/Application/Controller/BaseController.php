@@ -16,7 +16,7 @@ namespace Application\Controller {
         protected $serializer;
         
         public function __construct() {
-            $this->serializer = SerializerBuilder::create()->build();;
+            $this->serializer = SerializerBuilder::create()->build();
         }
         
         protected function addFlashErrorMsgs($messages) {

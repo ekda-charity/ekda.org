@@ -9,6 +9,7 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation) {
     self.sheepCost = data.sheepcost;
     self.cowCost = data.cowcost;
     self.camelCost = data.camelcost;
+    self.disableinstructionsdate = data.disableinstructionsdate;
     self.qurbaniseason = !data.qurbaniseason ? false : true;
     self.confirmDonation = !confirmDonation ? false : true;
     
@@ -21,6 +22,10 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation) {
     self.email = ko.observable();
     self.mobile = ko.observable();
     self.instructions = ko.observable();
+    
+    self.disableInstructions = ko.computed(function () {
+        return moment() >= moment(self.disableinstructionsdate);
+    });
 
     self.sheepTotal = ko.computed(function () {
         return self.sheep() * self.sheepCost;
