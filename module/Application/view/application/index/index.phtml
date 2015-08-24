@@ -60,38 +60,16 @@
 
             </tbody>
         </table>
-        <form autocomplete="on">
-        <table class="table table-condensed" data-bind="visible: addInstructions">
-            <tbody>
-                <tr>
-                    <td class="col-md-3">Full Name</td>
-                    <td class="col-md-9"><input type="text" name="fullname" class="form-control" data-bind="value: fullname" /></td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td><input type="text" name="email" class="form-control" data-bind="value: email" /></td>
-                </tr>
-                <tr>
-                    <td>Mobile</td>
-                    <td><input type="text" name="mobile" class="form-control" data-bind="value: mobile" /></td>
-                </tr>
-                <tr>
-                    <td>Instructions</td>
-                    <td><textarea type="text" class="form-control" rows="6" data-bind="value: instructions"></textarea></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="text-right">
-                        <button class="btn btn-primary btn-sm ladda-button" 
-                                data-style="zoom-out"
-                                data-bind="click: donate">
-                            <span class="ladda-label">Donate</span>
-                        </button>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
+        <form autocomplete="on" data-bind="visible: addInstructions">
+            <textarea type="text" class="form-control top5" rows="6" data-bind="value: instructions" placeholder="Instructions"></textarea>
+            <input type="text" name="email" class="form-control top5" data-bind="value: email" placeholder="Email (optional)" />
+            <div class="text-right top5">
+                <button class="btn btn-primary btn-sm ladda-button" 
+                        data-style="zoom-out"
+                        data-bind="click: donate">
+                    <span class="ladda-label">Donate</span>
+                </button>
+            </div>
         </form>
     </div>
 

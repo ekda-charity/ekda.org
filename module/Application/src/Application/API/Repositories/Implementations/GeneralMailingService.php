@@ -48,7 +48,7 @@ namespace Application\API\Repositories\Implementations {
                 <head></head>
                 <body>
                 <p>
-                Salam Aleikum " . $qurbani->getFullname() . ",<br/>
+                Salam Aleikum,<br/>
                 This is to confirm that we have received your Qurbani Donation to East Africa as follows:
                 <ul>
                 <li><strong>Sheep:</strong> " . $qurbani->getSheep() . "</li>

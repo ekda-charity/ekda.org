@@ -93,7 +93,7 @@ class Qurbani
      * @Type("string")
      * @var string
      *
-     * @ORM\Column(name="instructions", type="text", nullable=false)
+     * @ORM\Column(name="instructions", type="text", nullable=true)
      */
     private $instructions;
     

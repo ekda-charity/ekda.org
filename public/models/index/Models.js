@@ -52,14 +52,6 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation) {
         }
         
         if (self.addInstructions()) {
-            if (!utils.validEmail(self.email())) {
-                errors.push("Email is required")
-            }
-            
-            if (!self.fullname()) {
-                errors.push("Fullname is required")
-            }
-            
             if (!self.instructions()) {
                 errors.push("Instructions are required")
             }
