@@ -45,9 +45,6 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style="font-weight: normal;" data-bind="visible: !disableInstructions()">
-                            <input type="checkbox" data-bind="checked: addInstructions"> Add instructions for performing the Qurbani (optional)
-                        </label>
                     </td>
                     <td class="text-right">
                         <button class="btn btn-primary btn-sm ladda-button" 
@@ -60,17 +57,6 @@
 
             </tbody>
         </table>
-        <form autocomplete="on" data-bind="visible: addInstructions">
-            <textarea type="text" class="form-control top5" rows="6" data-bind="value: instructions" placeholder="Instructions"></textarea>
-            <input type="text" name="email" class="form-control top5" data-bind="value: email" placeholder="Email (optional)" />
-            <div class="text-right top5">
-                <button class="btn btn-primary btn-sm ladda-button" 
-                        data-style="zoom-out"
-                        data-bind="click: donate">
-                    <span class="ladda-label">Donate</span>
-                </button>
-            </div>
-        </form>
     </div>
 
     <hr/>

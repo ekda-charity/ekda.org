@@ -41,46 +41,11 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style="font-weight: normal;">
-                            <input type="checkbox" data-bind="checked: addInstructions"> Instructions (optional)
-                        </label>
                     </td>
                     <td class="text-right">
                         <button class="btn btn-primary btn-sm ladda-button" 
                                 data-style="zoom-out"
                                 data-bind="disable: addInstructions, click: donate">
-                            <span class="ladda-label">Donate</span>
-                        </button>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-
-        <table class="table table-condensed" data-bind="visible: addInstructions">
-            <tbody>
-                <tr>
-                    <td class="col-md-3">Full Name</td>
-                    <td class="col-md-9"><input type="text" class="form-control" data-bind="value: fullname" /></td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td><input type="text" class="form-control" data-bind="value: email" /></td>
-                </tr>
-                <tr>
-                    <td>Mobile</td>
-                    <td><input type="text" class="form-control" data-bind="value: mobile" /></td>
-                </tr>
-                <tr>
-                    <td>Instructions</td>
-                    <td><textarea type="text" class="form-control" rows="6" data-bind="value: instructions"></textarea></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="text-right">
-                        <button class="btn btn-primary btn-sm ladda-button" 
-                                data-style="zoom-out"
-                                data-bind="click: donate">
                             <span class="ladda-label">Donate</span>
                         </button>
                     </td>
@@ -100,16 +65,14 @@
                 <th class="col-md-1">Sheep</th>
                 <th class="col-md-1">Cows</th>
                 <th class="col-md-1">Camels</th>
-                <th class="col-md-2">Name</th>
-                <th class="col-md-4">Details</th>
-                <th class="col-md-1">ID</th>
+                <th class="col-md-7">Instructions</th>
                 <th class="col-md-2">Date</th>
             </tr>
         </thead>
 
         <tbody data-bind="if: (results().length == 0)">
             <tr>
-                <td colspan="6"><em>No Donors</em></td>
+                <td colspan="5"><em>No Donors</em></td>
             </tr>
         </tbody>
         
@@ -118,18 +81,7 @@
                 <td data-bind="text: sheep"></td>
                 <td data-bind="text: cows"></td>
                 <td data-bind="text: camels"></td>
-                <td data-bind="text: fullname"></td>
-                <td>
-                    <div>
-                        <span data-bind="text: mobile"></span>
-                        <span data-bind="visible: mobile"> / </span>
-                        <span data-bind="text: email"></span>
-                    </div>
-                    <div class="top5">
-                        <em data-bind="text: instructions"></em>
-                    </div>
-                </td>
-                <td data-bind="text: donationid"></td>
+                <td data-bind="text: instructions"></td>
                 <td data-bind="text: moment(createddate).format('YYYY-MM-DD')"></td>
             </tr>
         </tbody>
@@ -141,15 +93,11 @@
                 <th data-bind="text: purchasedCamels"></th>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td></td>
             </tr>
             <tr>
                 <th data-bind="text: details.totalsheep"></th>
                 <th data-bind="text: details.totalcows"></th>
                 <th data-bind="text: details.totalcamels"></th>
-                <td></td>
-                <td></td>
                 <td></td>
                 <td></td>
             </tr>
