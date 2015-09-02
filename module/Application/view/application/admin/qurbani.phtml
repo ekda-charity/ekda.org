@@ -66,13 +66,14 @@
                 <th class="col-md-1">Cows</th>
                 <th class="col-md-1">Camels</th>
                 <th class="col-md-7">Instructions</th>
-                <th class="col-md-2">Date</th>
+                <th class="col-md-1">ID</th>
+                <th class="col-md-1">Date</th>
             </tr>
         </thead>
 
         <tbody data-bind="if: (results().length == 0)">
             <tr>
-                <td colspan="5"><em>No Donors</em></td>
+                <td colspan="6"><em>No Donors</em></td>
             </tr>
         </tbody>
         
@@ -82,6 +83,7 @@
                 <td data-bind="text: cows"></td>
                 <td data-bind="text: camels"></td>
                 <td data-bind="text: instructions"></td>
+                <td data-bind="text: donationid"></td>
                 <td data-bind="text: moment(createddate).format('YYYY-MM-DD')"></td>
             </tr>
         </tbody>
@@ -93,11 +95,13 @@
                 <th data-bind="text: purchasedCamels"></th>
                 <td></td>
                 <td></td>
+                <td></td>
             </tr>
             <tr>
                 <th data-bind="text: details.totalsheep"></th>
                 <th data-bind="text: details.totalcows"></th>
                 <th data-bind="text: details.totalcamels"></th>
+                <td></td>
                 <td></td>
                 <td></td>
             </tr>
