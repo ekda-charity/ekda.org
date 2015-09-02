@@ -65,9 +65,9 @@
                 <th class="col-md-1">Sheep</th>
                 <th class="col-md-1">Cows</th>
                 <th class="col-md-1">Camels</th>
-                <th class="col-md-7">Instructions</th>
+                <th class="col-md-6">Instructions</th>
                 <th class="col-md-1">ID</th>
-                <th class="col-md-1">Date</th>
+                <th class="col-md-2">Date</th>
             </tr>
         </thead>
 
@@ -82,7 +82,9 @@
                 <td data-bind="text: sheep"></td>
                 <td data-bind="text: cows"></td>
                 <td data-bind="text: camels"></td>
-                <td data-bind="text: instructions"></td>
+                <td>
+                    <span class="break-word newline-text" data-bind="html: instructions"></span>
+                </td>
                 <td data-bind="text: donationid"></td>
                 <td data-bind="text: moment(createddate).format('YYYY-MM-DD')"></td>
             </tr>
