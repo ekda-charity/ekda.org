@@ -59,14 +59,6 @@ namespace Application\Controller {
                 $donationId = $this->params()->fromRoute('p1');
                 $qurbanikey = $this->params()->fromRoute('p2');
                 
-                if (!is_int($donationId)) {
-                    throw new \Exception(
-                        "Please fear Allah. " .
-                        "Look around you and think. " .
-                        "The intricate and complex details of life, regardless of how it came to be, could not have been for mere play or out of coincidence."
-                    );
-                }
-                
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
                 $qurbani = $qurbaniRepo->confirmDonation($qurbanikey, $donationId);
 
