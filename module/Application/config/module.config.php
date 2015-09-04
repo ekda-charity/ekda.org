@@ -10,6 +10,7 @@ namespace Application {
                 'Admin'          => 'Application\Controller\AdminController',
                 'QurbaniApi'     => 'Application\Controller\QurbaniApiController',
                 'BatchMail'      => 'Application\Controller\BatchMailController',
+                'AdminApi'       => 'Application\Controller\AdminApiController',
             ),
         ),
         'router' => array(
@@ -60,6 +61,10 @@ namespace Application {
                 'EMailSvc'          => 'Application\API\Repositories\Factories\EMailServiceFactory',
                 'GMailSvc'          => 'Application\API\Repositories\Factories\GeneralMailingServiceFactory',
                 'QurbaniRepo'       => 'Application\API\Repositories\Factories\QurbaniRepositoryFactory',
+                'UsersRepo'         => 'Application\API\Repositories\Factories\UsersRepositoryFactory',
+                'ZendDbAdapter'     => 'Application\API\Repositories\Factories\ZendDbAdapterFactory',
+                'AdminAuthStorage'  => 'Application\API\Repositories\Factories\AdminAuthStorageFactory',
+                'AdminAuthService'  => 'Application\API\Repositories\Factories\AdminAuthServiceFactory',
             ),
         ),
         'doctrine' => array(
@@ -123,7 +128,21 @@ namespace Application {
                     'controller' => 'Index',
                     'action' => 'preview',
                     'visible' => false,
-                ),                
+                ),
+                'admin' => array(
+                    'id' => Constants::ADMIN_ID,
+                    'label' => 'Admin',
+                    'controller' => 'Admin',
+                    'action' => 'index',
+                    'visible' => false,
+                ),
+                'qurbani' => array(
+                    'id' => 'Qurbani',
+                    'label' => 'Qurbani',
+                    'controller' => 'Admin',
+                    'action' => 'qurbani',
+                    'requireslogin' => true,
+                ),
                 'Home' => array(
                     'id' => Constants::HOME_PAGE_NAVIGATION_ID,
                     'label' => 'Home',

@@ -10,6 +10,7 @@ namespace Application\Controller {
     use Application\API\Canonicals\Entity\Ads;
     use Zend\EventManager\EventManagerInterface;
     use Application\API\Canonicals\Entity\Respondents;
+    use Application\API\Canonicals\General\Constants;
 
     class BaseController extends AbstractActionController {
 
@@ -17,6 +18,50 @@ namespace Application\Controller {
         
         public function __construct() {
             $this->serializer = SerializerBuilder::create()->build();
+        }
+        
+        public function setEventManager(EventManagerInterface $events) {
+            parent::setEventManager($events);
+            
+            $thisPtr = $this;
+            $events->attach('dispatch', function ($e) use ($thisPtr) {
+                
+                $adminIndex   = $thisPtr->getServiceLocator()->get('Navigation')->findOneById(Constants::ADMIN_ID);
+                $requirelogin = $thisPtr->getServiceLocator()->get('Navigation')->findAllBy("requireslogin", true);
+                $authService  = $thisPtr->getServiceLocator()->get('AdminAuthService');
+                
+                if ($authService->hasIdentity()) {
+                    $adminIndex->setVisible(true);
+                    $adminIndex->setLabel("Logout");
+                    $adminIndex->setAction("logout");
+                    
+                    foreach ($requirelogin as $rec) {
+                        $thisPtr->getServiceLocator()->get('Navigation')->findOneById($rec->get("id"))->setVisible(true);
+                    }
+                } else {
+                    $adminIndex->setVisible(false);
+                    $adminIndex->setLabel("Login");
+                    $adminIndex->setAction("index");
+                     
+                    foreach ($requirelogin as $rec) {
+                        $thisPtr->getServiceLocator()->get('Navigation')->findOneById($rec->get("id"))->setVisible(false);
+                    }
+                    
+                    $controller = strtolower($thisPtr->params()->fromRoute('controller'));
+                    $action = strtolower($thisPtr->params()->fromRoute('action'));
+                    
+                    $unauthorizedAttempt = array_filter($requirelogin, function ($item) use ($controller, $action) {
+                        return strtolower($item->get("controller")) == $controller && strtolower($item->get("action")) == $action;
+                    });
+                    
+                    if (count($unauthorizedAttempt) > 0) {
+                        return $thisPtr->redirect()->toUrl("/Index/index");
+                    }
+                }
+                
+            }, 100);
+            
+            return $this;
         }
         
         protected function addFlashErrorMsgs($messages) {
@@ -94,19 +139,6 @@ namespace Application\Controller {
             $respondent->setPassword(null);
             $respondent->setEmail(null);
         }
-        
-        public function setEventManager(EventManagerInterface $events) {
-            parent::setEventManager($events);
-            
-            $thisPtr = $this;
-            $events->attach('dispatch', function ($e) use ($thisPtr) {
-                
-            }, 100);
-            
-            return $this;
-        }        
-        
-        
     }
 }
 

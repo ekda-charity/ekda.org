@@ -1,0 +1,46 @@
+<script>
+    $(function() {
+        var dom = document.getElementById("EntryContentNode");
+        var obj = new ekda.admin.AdminLoginModel();
+        ko.applyBindings(obj, dom);
+    });
+</script>
+
+<h2 class="for-lg-screen">Login</h2>
+
+<form data-bind="submit: login">
+    <table class="table table-condensed table-responsive">
+
+        <tbody>
+
+            <tr>
+                <th class="col-md-2">Username</th>
+                <td class="col-md-4">
+                    <input type="text" name="username" class="form-control" data-bind="value: username" />
+                </td>
+                <td class="col-md-6"></td>
+            </tr>
+
+            <tr>
+                <th>Password</th>
+                <td>
+                    <input type="password" name="password" class="form-control" data-bind="value: password" />
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary btn-sm ladda-button" 
+                            data-style="zoom-out"
+                            data-bind="click: login">
+                        <span class="ladda-label">Login</span>
+                    </button>
+                </td>
+                <td></td>
+            </tr>
+
+        </tbody>
+    </table>        
+</form>
