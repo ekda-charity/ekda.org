@@ -87,9 +87,12 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation, donatedCallba
                             var name = $('#qurbaniName').val();
                             var email = $('#qurbaniEmail').val();
                             
-                            if (!utils.validEmail(email)) {
-                                toastrError("A valid email is required");
-                                return;
+                            if (email && email.trim().length > 0) {
+                                email = email.trim();
+                                if (!utils.validEmail(email)) {
+                                    toastrError("A valid email is required");
+                                    return false;
+                                }
                             }
                             
                             self.instructions(name || null);
