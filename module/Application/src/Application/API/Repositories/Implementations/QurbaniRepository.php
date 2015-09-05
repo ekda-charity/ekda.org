@@ -31,6 +31,39 @@ namespace Application\API\Repositories\Implementations {
             $this->details->disableinstructionsdate = $qurbaniDetails["disableinstructionsdate"];
         }
 
+        public function voidQurbani($qurbanikey) {
+            $repo = $this->qurbaniRepo->repository;
+            $this->em->transactional(function(EntityManager $em) use($qurbanikey, $repo) {
+
+                $oneRecord = $repo->find($qurbanikey);
+
+                if ($oneRecord == null) {
+                    throw new \Exception("Donation Could not be found");
+                } else {
+                    $oneRecord->setVoid(true);
+                    $em->merge($oneRecord);
+                }
+            }); 
+            
+            return $repo->find($qurbani->getQurbanikey());
+        }
+
+        public function updateQurbani(Qurbani $qurbani) {
+            $repo = $this->qurbaniRepo->repository;
+            $this->em->transactional(function(EntityManager $em) use($qurbani, $repo) {
+
+                $oneRecord = $repo->find($qurbani->getQurbanikey());
+
+                if ($oneRecord == null) {
+                    throw new \Exception("Donation Could not be found");
+                } else {
+                    $em->merge($oneRecord);
+                }
+            }); 
+            
+            return $repo->find($qurbani->getQurbanikey());
+        }
+
         public function checkStockAndAddQurbani(Qurbani $qurbani, $confirmDonation = false) {
             $sheepLeft  = $this->details->totalsheep  - $this->getPurchasedSheep();
             $cowsLeft   = $this->details->totalcows   - $this->getPurchasedCows();
@@ -55,6 +88,7 @@ namespace Application\API\Repositories\Implementations {
 
             $qurbani->setDonationid($confirmDonation ? QurbaniRepository::DONATION_ID : null);
             $qurbani->setQurbanimonth($this->details->qurbanimonth);
+            $qurbani->setVoid(false);
             
             $this->em->transactional(function(EntityManager $em) use($qurbani) {
                 $em->persist($qurbani);
@@ -86,9 +120,21 @@ namespace Application\API\Repositories\Implementations {
             return $this->details;
         }
 
+        public function getStock() {
+            $sheepLeft  = $this->details->totalsheep  - $this->getPurchasedSheep();
+            $cowsLeft   = $this->details->totalcows   - $this->getPurchasedCows();
+            $camelsLeft = $this->details->totalcamels - $this->getPurchasedCamels();
+            
+            return array(
+                'sheep'  => $sheepLeft,
+                'cows'   => $cowsLeft,
+                'camels' => $camelsLeft
+            );
+        }
+        
         public function getPurchasedCamels() {
             $dql = "SELECT SUM(q.camels) AS animals FROM Application\API\Canonicals\Entity\Qurbani q " .
-                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL";
+                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL AND q.void = 0";
             
             return $this->em->createQuery($dql)
                     ->setParameter(1, $this->details->qurbanimonth)
@@ -97,7 +143,7 @@ namespace Application\API\Repositories\Implementations {
 
         public function getPurchasedCows() {
             $dql = "SELECT SUM(q.cows) AS animals FROM Application\API\Canonicals\Entity\Qurbani q " .
-                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL";
+                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL AND q.void = 0";
             
             return $this->em->createQuery($dql)
                     ->setParameter(1, $this->details->qurbanimonth)
@@ -106,14 +152,14 @@ namespace Application\API\Repositories\Implementations {
 
         public function getPurchasedSheep() {
             $dql = "SELECT SUM(q.sheep) AS animals FROM Application\API\Canonicals\Entity\Qurbani q " .
-                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL";
+                   "WHERE q.qurbanimonth = ?1 AND q.donationid IS NOT NULL AND q.void = 0";
             
             return $this->em->createQuery($dql)
                     ->setParameter(1, $this->details->qurbanimonth)
                     ->getSingleScalarResult();            
         }
 
-        public function search($page = 0, $pageSize = 25, $purchasedOnly = true) {
+        public function search($page = 0, $pageSize = 25, $purchasedOnly = true, $void = false) {
             $errors = array();
             $total = 0;
             $items = null;
@@ -124,13 +170,14 @@ namespace Application\API\Repositories\Implementations {
 
                 foreach(array(QurbaniRepository::CNT, QurbaniRepository::RST) as $index) {
                     $query[$index] = $this->qurbaniRepo->repository->createQueryBuilder("q")
-                            ->where("q.qurbanimonth = :pQurbaniyear")->setParameter("pQurbaniyear", $this->details->qurbanimonth);
+                            ->where("q.void = :pVoid")->setParameter("pVoid", $void)
+                            ->andWhere("q.qurbanimonth = :pQurbanimonth")->setParameter("pQurbanimonth", $this->details->qurbanimonth);
                     
                     if ($purchasedOnly) {
                         $query[$index] = $query[$index]->andWhere("q.donationid IS NOT NULL");
                     }
                     
-                    $query[$index] = $query[$index]->orderBy("q.createddate", "ASC");
+                    $query[$index] = $query[$index]->orderBy("q.createddate", "DESC");
 
                     if ($index == QurbaniRepository::CNT) {
                         $query[$index] = $query[$index]->select("COUNT(q.qurbanikey)");
@@ -147,5 +194,10 @@ namespace Application\API\Repositories\Implementations {
             return ResponseUtils::createSearchResponse($total, $items, $page, $pageSize, $errors);            
         }
 
+        public function findAll() {
+            return $this->qurbaniRepo->findBy(array(
+                'qurbanimonth' => $this->details->qurbanimonth
+            ));
+        }
     }
 }

@@ -32,3 +32,6 @@ CREATE TABLE IF NOT EXISTS `Emails` (
   PRIMARY KEY (`emailKey`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
+
+ALTER TABLE `Qurbanis` 
+ADD COLUMN `void` INT(1) NOT NULL DEFAULT 0 AFTER `donationid`;

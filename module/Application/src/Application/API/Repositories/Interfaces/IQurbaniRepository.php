@@ -5,12 +5,16 @@ namespace Application\API\Repositories\Interfaces {
     use Application\API\Canonicals\Entity\Qurbani;
     
     interface IQurbaniRepository {
+        public function voidQurbani($qurbanikey);
+        public function updateQurbani(Qurbani $qurbani);
         public function checkStockAndAddQurbani(Qurbani $qurbani, $confirmDonation = false);
         public function confirmDonation($qurbanikey, $donationId);
         public function getQurbaniDetails();
+        public function getStock();
         public function getPurchasedSheep();
         public function getPurchasedCows();
         public function getPurchasedCamels();
-        public function search($page = 0, $pageSize = 25, $purchasedOnly = true);
+        public function search($page = 0, $pageSize = 25, $purchasedOnly = true, $void = false);
+        public function findAll();
     }
 }

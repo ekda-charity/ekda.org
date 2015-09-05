@@ -6,8 +6,53 @@ namespace Application\Controller {
 
     class QurbaniApiController extends BaseController {
         
+        public function updatequrbaniAction() {
+            try {
+                $authService = $this->getServiceLocator()->get('AdminAuthService');
+
+                if (!$authService->hasIdentity()) {
+                    throw new \Exception("Unauthorized Access");
+                }
+                
+                $jsonData = $this->getRequest()->getContent();
+                $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
+                
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                $qurbaniRepo->updateQurbani($data);
+                $allQurbani = $qurbaniRepo->findAll();
+                
+                $response = ResponseUtils::createWriteResponse($allQurbani);
+                return $this->jsonResponse($response);
+                
+            } catch (\Exception $ex) {
+                $response = ResponseUtils::createExceptionResponse($ex);
+                return $this->jsonResponse($response);
+            }
+            
+        }
+        
+        public function getstockAction(){
+            try {
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                $stock = $qurbaniRepo->getStock();
+                
+                $response = ResponseUtils::createSingleFetchResponse($stock);
+                return $this->jsonResponse($response);
+                
+            } catch (\Exception $ex) {
+                $response = ResponseUtils::createExceptionResponse($ex);
+                return $this->jsonResponse($response);
+            }
+        }
+        
         public function checkstockanddonateAction(){
             try {
+                $authService = $this->getServiceLocator()->get('AdminAuthService');
+
+                if (!$authService->hasIdentity()) {
+                    throw new \Exception("Unauthorized Access");
+                }
+                
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
 
