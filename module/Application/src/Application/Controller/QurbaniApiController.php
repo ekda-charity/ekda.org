@@ -6,6 +6,27 @@ namespace Application\Controller {
 
     class QurbaniApiController extends BaseController {
         
+        public function togglequrbanivoidAction() {
+            try {
+                $authService = $this->getServiceLocator()->get('AdminAuthService');
+
+                if (!$authService->hasIdentity()) {
+                    throw new \Exception("Unauthorized Access");
+                }
+                
+                $qurbaniKey = $this->params()->fromRoute('p1');
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                $donation = $qurbaniRepo->toggleQurbaniVoid($qurbaniKey);
+                
+                $response = ResponseUtils::createWriteResponse($donation);
+                return $this->jsonResponse($response);
+                
+            } catch (\Exception $ex) {
+                $response = ResponseUtils::createExceptionResponse($ex);
+                return $this->jsonResponse($response);
+            }
+        }
+        
         public function updatequrbaniAction() {
             try {
                 $authService = $this->getServiceLocator()->get('AdminAuthService');
@@ -18,17 +39,36 @@ namespace Application\Controller {
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
                 
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $qurbaniRepo->updateQurbani($data);
-                $allQurbani = $qurbaniRepo->findAll();
+                $donation = $qurbaniRepo->updateQurbani($data);
                 
-                $response = ResponseUtils::createWriteResponse($allQurbani);
+                $response = ResponseUtils::createWriteResponse($donation);
                 return $this->jsonResponse($response);
                 
             } catch (\Exception $ex) {
                 $response = ResponseUtils::createExceptionResponse($ex);
                 return $this->jsonResponse($response);
             }
-            
+        }
+        
+        public function searchqurbaniAction() {
+            try {
+                $authService = $this->getServiceLocator()->get('AdminAuthService');
+
+                if (!$authService->hasIdentity()) {
+                    throw new \Exception("Unauthorized Access");
+                }
+                
+                $purchasedonly = $this->params()->fromRoute('p1');
+                $includevoid = $this->params()->fromRoute('p2');
+                
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                $response = $qurbaniRepo->search(0, PHP_INT_MAX, $purchasedonly, $includevoid);
+                return $this->jsonResponse($response);
+                
+            } catch (\Exception $ex) {
+                $response = ResponseUtils::createExceptionResponse($ex);
+                return $this->jsonResponse($response);
+            }
         }
         
         public function getstockAction(){

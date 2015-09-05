@@ -2,7 +2,7 @@ var app = app || {};
 app.index = app.index || {};
 app.index.Models = app.index.Models || {};
 
-namespace("ekda.index").Qurbani = function (data, confirmDonation) {
+namespace("ekda.index").Qurbani = function (data, confirmDonation, donatedCallback) {
     var self = this;
     
     self.numbers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
@@ -12,6 +12,7 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation) {
     self.disableinstructionsdate = data.disableinstructionsdate;
     self.qurbaniseason = !data.qurbaniseason ? false : true;
     self.confirmDonation = !confirmDonation ? false : true;
+    self.donatedCallback = donatedCallback;
     
     self.sheep = ko.observable(1);
     self.cows = ko.observable(0);
@@ -115,6 +116,9 @@ namespace("ekda.index").Qurbani = function (data, confirmDonation) {
                                     self.email(null);
                                     self.mobile(null);
                                     self.instructions(null);
+                                    if (self.donatedCallback) {
+                                        self.donatedCallback();
+                                    }
                                     toastrSuccess("Donation was successfull");
                                 } else {
                                     document.location.href = response.item;

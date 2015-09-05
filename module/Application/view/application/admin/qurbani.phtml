@@ -45,7 +45,7 @@
                     <td class="text-right">
                         <button class="btn btn-primary btn-sm ladda-button" 
                                 data-style="zoom-out"
-                                data-bind="disable: addInstructions, click: donate">
+                                data-bind="click: donate">
                             <span class="ladda-label">Donate</span>
                         </button>
                     </td>
@@ -59,7 +59,23 @@
 
     <h2>Current Donors</h2>
     
-    <table class="table table-condensed" style="font-size: small">
+    <button id="qurbani-search" class="btn btn-success btn-sm ladda-button" 
+            data-style="zoom-out"
+            data-bind="click: searchQurbani">
+        <span class="ladda-label">Search</span>
+    </button>
+    &nbsp;
+    <label>
+        <input type="checkbox" data-bind="checked: purchasedonly"> Purchased Only
+    </label>
+    &nbsp;
+    <label>
+        <input type="checkbox" data-bind="checked: includevoid"> Include Void
+    </label>
+    
+    <hr/>
+    
+    <table class="table table-condensed table-striped" style="font-size: small">
         <thead>
             <tr>
                 <th class="col-md-1">Sheep</th>
@@ -91,7 +107,8 @@
                 <td>
                     <span class="fa fa-pencil pointer-cursor"></span>
                     &nbsp;
-                    <span class="fa fa-ban pointer-cursor"></span>
+                    <strong class="pointer-cursor" style="color: red" title="Toggle Void" data-bind="click: $parent.toggleVoid, visible: isvoid">V</strong>
+                    <strong class="pointer-cursor" style="color: green" title="Toggle Void" data-bind="click: $parent.toggleVoid, visible: !isvoid">A</strong>
                 </td>
             </tr>
         </tbody>

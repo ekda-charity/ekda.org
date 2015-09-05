@@ -109,9 +109,9 @@ class Qurbani
      * @Type("integer")
      * @var integer
      *
-     * @ORM\Column(name="void", type="integer", nullable=false)
+     * @ORM\Column(name="isvoid", type="integer", nullable=false)
      */
-    private $void;
+    private $isvoid;
     
     /**
      * @Type("DateTime<'Y-m-d\TH:i:sO'>")
@@ -132,7 +132,7 @@ class Qurbani
     function getMobile() { return $this->mobile; }
     function getInstructions() { return $this->instructions; }
     function getDonationid() { return $this->donationid; }    
-    function getVoid() { return $this->void; }    
+    function getIsvoid() { return $this->isvoid; }    
     function getCreateddate() { return $this->createddate; }    
 
     function setQurbanikey($val) { $this->qurbanikey = $val; }
@@ -146,6 +146,6 @@ class Qurbani
     function setMobile($val) { $this->mobile = $val; }
     function setInstructions($val) { $this->instructions = $val; }
     function setDonationid($val) { $this->donationid = $val; }
-    function setVoid($val) { $this->void = $val; }
+    function setIsvoid($val) { $this->isvoid = $val; }
     function setCreateddate($val) { $this->createddate = $val; }
 }
