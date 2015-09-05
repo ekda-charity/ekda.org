@@ -42,14 +42,14 @@ namespace Application\API\Repositories\Implementations {
         public function qurbaniConfrimationAlert($qurbaniKey) {
             $qurbani = $this->qurbaniRepo->fetch($qurbaniKey);
 
-            $subject = "Your Qurbani Donation to East Africa";
+            $subject = "Your Donation";
             $htmlBody = "
                 <html>
                 <head></head>
                 <body>
                 <p>
                 Salam Aleikum,<br/>
-                This is to confirm that we have received your Qurbani Donation to East Africa as follows:
+                This is to confirm that we have received your Donation as follows:
                 <ul>
                 <li><strong>Sheep:</strong> " . $qurbani->getSheep() . "</li>
                 <li><strong>Cows:</strong> " . $qurbani->getCows() . "</li>
