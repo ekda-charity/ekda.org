@@ -1,13 +1,12 @@
 <script>
     $(function() {
-        var inputData = ko.toJS(<?php echo $this->model; ?>);
         var dom = document.getElementById("EntryContentNode");
-        var obj = new ekda.admin.QurbaniAdminModel(inputData);
+        var obj = new ekda.admin.QurbaniAdminModel();
         ko.applyBindings(obj, dom);
     });
 </script>
 
-<div data-bind="visible: qurbani.qurbaniseason">
+<div data-bind="visible: qurbaniseason">
     <h2>Manual Donation</h2>
     <div data-bind="with: qurbani">
         <table class="table table-condensed">
@@ -21,18 +20,18 @@
             <tbody>
                 <tr>
                     <td>Sheep</td>
-                    <td><select class="form-control" data-bind="options: numbers, value: sheep"></select></td>
-                    <td class="text-right" data-bind="text: (sheep() * sheepCost)"></td>
+                    <td><select class="form-control" data-bind="options: $parent.numbers, value: sheep"></select></td>
+                    <td class="text-right" data-bind="text: (sheep() * sheepCost())"></td>
                 </tr>
                 <tr>
                     <td>Cows</td>
-                    <td><select class="form-control" data-bind="options: numbers, value: cows"></select></td>
-                    <td class="text-right" data-bind="text: (cows() * cowCost)"></td>
+                    <td><select class="form-control" data-bind="options: $parent.numbers, value: cows"></select></td>
+                    <td class="text-right" data-bind="text: (cows() * cowCost())"></td>
                 </tr>
                 <tr>
                     <td>Camels</td>
-                    <td><select class="form-control" data-bind="options: numbers, value: camels"></select></td>
-                    <td class="text-right" data-bind="text: (camels() * camelCost)"></td>
+                    <td><select class="form-control" data-bind="options: $parent.numbers, value: camels"></select></td>
+                    <td class="text-right" data-bind="text: (camels() * camelCost())"></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -45,7 +44,7 @@
                     <td class="text-right">
                         <button class="btn btn-primary btn-sm ladda-button" 
                                 data-style="zoom-out"
-                                data-bind="click: donate">
+                                data-bind="click: $parent.donate">
                             <span class="ladda-label">Donate</span>
                         </button>
                     </td>
@@ -105,7 +104,10 @@
                 <td data-bind="text: donationid"></td>
                 <td data-bind="text: moment(createddate).format('DD/MM')"></td>
                 <td>
-                    <span class="fa fa-pencil pointer-cursor"></span>
+                    <span class="fa fa-pencil pointer-cursor"
+                          data-toggle="modal" data-target="#qurbaniModal"
+                          data-bind="click: $parent.editDonation">
+                    </span>
                     &nbsp;
                     <strong class="pointer-cursor" style="color: red" title="Toggle Void" data-bind="click: $parent.toggleVoid, visible: isvoid">V</strong>
                     <strong class="pointer-cursor" style="color: green" title="Toggle Void" data-bind="click: $parent.toggleVoid, visible: !isvoid">A</strong>
@@ -113,7 +115,7 @@
             </tr>
         </tbody>
 
-        <tbody style="background: #efe;">
+        <tbody style="background: #efe;" data-bind="visible: purchasedonly() && !includevoid()">
             <tr>
                 <th data-bind="text: purchasedSheep"></th>
                 <th data-bind="text: purchasedCows"></th>
@@ -121,11 +123,15 @@
                 <td colspan="4"></td>
             </tr>
             <tr>
-                <th data-bind="text: details.totalsheep"></th>
-                <th data-bind="text: details.totalcows"></th>
-                <th data-bind="text: details.totalcamels"></th>
+                <th data-bind="text: totalsheep"></th>
+                <th data-bind="text: totalcows"></th>
+                <th data-bind="text: totalcamels"></th>
                 <td colspan="4"></td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<div class="modal fade" id="qurbaniModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-bind="with: qurbaniViewModel">
+    <?php echo $this->partial("admin/_qurbani_modal"); ?>
 </div>

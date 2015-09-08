@@ -104,6 +104,7 @@ namespace Application {
                 'error/index'             => __DIR__ . '/../view/error/index.phtml',
                 'layout/messages'         => __DIR__ . '/../view/layout/_messages.phtml',
                 'layout/wppost'           => __DIR__ . '/../view/layout/_wppost.phtml',
+                'admin/_qurbani_modal'    => __DIR__ . '/../view/application/admin/_qurbani_modal.phtml',
             ),
             'template_path_stack' => array(
                 __DIR__ . '/../view',

@@ -37,15 +37,18 @@ namespace Application\API\Repositories\Implementations {
             
             if ($qurbani == null) {
                 throw new \Exception("Donation Could not be found");
-            } else if ($qurbani->getIsvoid()) {
-                $errors = $this->validateRequest($qurbani);
-                if (count($errors) > 0) {
-                    throw new \Exception(implode(", ", $errors));
-                }
+            }
+
+            $dummy = new Qurbani($qurbani);
+            $dummy->setIsvoid($dummy->getIsvoid() == 1 ? 0 : 1);
+            $errors = $this->validateRequest($dummy);
+            
+            if (count($errors) > 0) {
+                throw new \Exception(implode(", ", $errors));
             }
             
-            $this->em->transactional(function(EntityManager $em) use($qurbani, $repo) {
-                $qurbani->setIsvoid(!$qurbani->getIsvoid());
+            $this->em->transactional(function(EntityManager $em) use($qurbani) {
+                $qurbani->setIsvoid($qurbani->getIsvoid() == 1 ? 0 : 1);
                 $em->merge($qurbani);
             }); 
             
@@ -92,42 +95,45 @@ namespace Application\API\Repositories\Implementations {
                 $errors[] = "At least one animal is required";
             }
             
-            $sheep = $qurbani->getSheep();
-            $cows = $qurbani->getCows();
-            $camels = $qurbani->getCamels();
-            
-            if ($qurbani->getQurbanikey() != null) {
-                $current = $this->qurbaniRepo->fetch($qurbani->getQurbanikey());
+            if (($qurbani->getDonationid() != null || $qurbani->getQurbanikey() == null) && !$qurbani->getIsvoid()) {
                 
-                if ($current == null) {
-                    $errors[] = "Could not find Qurbani Donation";
-                } else {
-                    if ($current->getQurbanimonth() != $this->details->qurbanimonth) {
-                        $errors[] = "Invalid Qurbani Month";
-                    }
+                $sheep = $qurbani->getSheep();
+                $cows = $qurbani->getCows();
+                $camels = $qurbani->getCamels();
 
-                    if ($current->getDonationid() != null && !$current->getIsvoid()) {
-                        $sheep -= $current->getSheep();
-                        $cows -= $current->getCows();
-                        $camels -= $current->getCamels();
+                if ($qurbani->getQurbanikey() != null) {
+                    $current = $this->qurbaniRepo->fetch($qurbani->getQurbanikey());
+
+                    if ($current == null) {
+                        $errors[] = "Could not find Qurbani Donation";
+                    } else {
+                        if ($current->getQurbanimonth() != $this->details->qurbanimonth) {
+                            $errors[] = "Invalid Qurbani Month";
+                        }
+
+                        if ($current->getDonationid() != null && !$current->getIsvoid()) {
+                            $sheep -= $current->getSheep();
+                            $cows -= $current->getCows();
+                            $camels -= $current->getCamels();
+                        }
                     }
                 }
-            }
-            
-            $sheepLeft  = $this->details->totalsheep  - $this->getPurchasedSheep();
-            $cowsLeft   = $this->details->totalcows   - $this->getPurchasedCows();
-            $camelsLeft = $this->details->totalcamels - $this->getPurchasedCamels();
-            
-            if($sheep > $sheepLeft) {
-                $errors[] = "Only $sheepLeft Sheep left";
-            }
-            
-            if($cows > $cowsLeft) {
-                $errors[] = "Only $cowsLeft Cows left";
-            }
-            
-            if ($camels > $camelsLeft) {
-                $errors[] = "Only $camelsLeft Camels left";
+
+                $sheepLeft  = $this->details->totalsheep  - $this->getPurchasedSheep();
+                $cowsLeft   = $this->details->totalcows   - $this->getPurchasedCows();
+                $camelsLeft = $this->details->totalcamels - $this->getPurchasedCamels();
+
+                if($sheep > $sheepLeft) {
+                    $errors[] = "Only $sheepLeft Sheep left";
+                }
+
+                if($cows > $cowsLeft) {
+                    $errors[] = "Only $cowsLeft Cows left";
+                }
+
+                if ($camels > $camelsLeft) {
+                    $errors[] = "Only $camelsLeft Camels left";
+                }
             }
             
             return $errors;
@@ -142,7 +148,7 @@ namespace Application\API\Repositories\Implementations {
 
             $qurbani->setDonationid($confirmDonation ? QurbaniRepository::DONATION_ID : null);
             $qurbani->setQurbanimonth($this->details->qurbanimonth);
-            $qurbani->setIsvoid(false);
+            $qurbani->setIsvoid(0);
             
             $this->em->transactional(function(EntityManager $em) use($qurbani) {
                 $em->persist($qurbani);

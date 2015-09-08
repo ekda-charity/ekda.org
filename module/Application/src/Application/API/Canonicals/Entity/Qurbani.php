@@ -121,6 +121,24 @@ class Qurbani
      */
     private $createddate;
     
+    public function __construct(Qurbani $qurbani = null) {
+        if ($qurbani != null) {
+            $this->qurbanikey = $qurbani->getQurbanikey();
+            $this->qurbanimonth = $qurbani->getQurbanimonth();
+            $this->sheep = $qurbani->getSheep();
+            $this->cows = $qurbani->getCows();
+            $this->camels = $qurbani->getCamels();
+            $this->total = $qurbani->getTotal();
+            $this->fullname = $qurbani->getFullname();
+            $this->email = $qurbani->getEmail();
+            $this->mobile = $qurbani->getMobile();
+            $this->instructions = $qurbani->getInstructions();
+            $this->donationid = $qurbani->getDonationid();
+            $this->isvoid = $qurbani->getIsvoid();
+            $this->createddate = $qurbani->getCreateddate();
+        }
+    }
+    
     function getQurbanikey() { return $this->qurbanikey; }
     function getQurbanimonth() { return $this->qurbanimonth; }
     function getSheep() { return $this->sheep; }

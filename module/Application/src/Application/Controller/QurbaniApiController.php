@@ -62,8 +62,16 @@ namespace Application\Controller {
                 $includevoid = $this->params()->fromRoute('p2');
                 
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $response = $qurbaniRepo->search(0, PHP_INT_MAX, $purchasedonly, $includevoid);
-                return $this->jsonResponse($response);
+                
+                $search = $qurbaniRepo->search(0, PHP_INT_MAX, $purchasedonly, $includevoid);
+                $details = $qurbaniRepo->getQurbaniDetails();
+                $stock = $qurbaniRepo->getStock();
+                
+                return $this->jsonResponse(array(
+                    'search' => $search,
+                    'details' => $details,
+                    'stock' => $stock
+                ));
                 
             } catch (\Exception $ex) {
                 $response = ResponseUtils::createExceptionResponse($ex);

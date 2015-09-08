@@ -11,7 +11,7 @@
     <p data-bind="html: content"></p>
 </div>
 
-<div data-bind="visible: qurbani.qurbaniseason">
+<div data-bind="visible: qurbaniseason">
     <h2>Donate with JustGiving</h2>
     <div data-bind="with: qurbani">
         <table class="table table-condensed">
@@ -25,18 +25,18 @@
             <tbody>
                 <tr>
                     <td>Sheep</td>
-                    <td><select class="form-control" data-bind="options: numbers, value: sheep"></select></td>
-                    <td class="text-right" data-bind="text: (sheep() * sheepCost)"></td>
+                    <td><select class="form-control" data-bind="options: $parent.numbers, value: sheep"></select></td>
+                    <td class="text-right" data-bind="text: (sheep() * sheepCost())"></td>
                 </tr>
                 <tr>
                     <td>Cows</td>
-                    <td><select class="form-control" data-bind="options: numbers, value: cows"></select></td>
-                    <td class="text-right" data-bind="text: (cows() * cowCost)"></td>
+                    <td><select class="form-control" data-bind="options: $parent.numbers, value: cows"></select></td>
+                    <td class="text-right" data-bind="text: (cows() * cowCost())"></td>
                 </tr>
                 <tr>
                     <td>Camels</td>
-                    <td><select class="form-control" data-bind="options: numbers, value: camels"></select></td>
-                    <td class="text-right" data-bind="text: (camels() * camelCost)"></td>
+                    <td><select class="form-control" data-bind="options: $parent.numbers, value: camels"></select></td>
+                    <td class="text-right" data-bind="text: (camels() * camelCost())"></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -49,7 +49,7 @@
                     <td class="text-right">
                         <button class="btn btn-primary btn-sm ladda-button" 
                                 data-style="zoom-out"
-                                data-bind="disable: addInstructions, click: donate">
+                                data-bind="click: $parent.donate">
                             <span class="ladda-label">Donate</span>
                         </button>
                     </td>
