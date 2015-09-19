@@ -7,73 +7,8 @@
     });
 </script>
 
-<div data-bind="foreach: posts">
-    <p data-bind="html: content"></p>
-</div>
-
-<div data-bind="visible: qurbaniseason">
-    <h2>Donate with JustGiving</h2>
-    <div data-bind="with: qurbani">
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th class="col-md-6">Animal</th>
-                    <th class="col-md-3">Quantity</th>
-                    <th class="col-md-3 text-right">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Sheep</td>
-                    <td><select class="form-control" data-bind="options: $parent.numbers, value: sheep"></select></td>
-                    <td class="text-right" data-bind="text: (sheep() * sheepCost())"></td>
-                </tr>
-                <tr>
-                    <td>Cows</td>
-                    <td><select class="form-control" data-bind="options: $parent.numbers, value: cows"></select></td>
-                    <td class="text-right" data-bind="text: (cows() * cowCost())"></td>
-                </tr>
-                <tr>
-                    <td>Camels</td>
-                    <td><select class="form-control" data-bind="options: $parent.numbers, value: camels"></select></td>
-                    <td class="text-right" data-bind="text: (camels() * camelCost())"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td class="text-right"><h2 data-bind="text: '£ '+total()"></h2></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                    </td>
-                    <td class="text-right">
-                        <button class="btn btn-primary btn-sm ladda-button" 
-                                data-style="zoom-out"
-                                data-bind="click: $parent.donate">
-                            <span class="ladda-label">Donate</span>
-                        </button>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
+<?php foreach ($this->posts as $rec) : ?>
+    <div>
+        <p><?php echo $rec->getContent(); ?></p>
     </div>
-
-    <hr/>
-
-    <h2>Donate by Bank and Let us Know</h2>
-    <p>You can also donate directly to the Bank. Please <strong>MAKE SURE TO REFERENCE QURBANI</strong>, and also let us know by sending an email 
-    to <strong>info@ekda.org</strong>. Our details are:</p>
-
-    <ul>
-        <li><strong>Account Name:</strong> EKDA</li>
-        <li><strong>Account Number:</strong> 29130700</li>
-        <li><strong>Sort Code:</strong> 60-30-22</li>
-        <li><strong>Reference:</strong> QURBANI</li>
-        <li>&nbsp;</li>
-        <li><strong>Bank:</strong> Natwest</li>
-        <li><strong>Branch:</strong> Natwest Aberdeen, 262 Union Street, Aberdeen, United Kingdom. AB10 1TP.</li>
-        <li><strong>IBAN:</strong> GB58NWBK60302229130700</li>
-        <li><strong>Swift Code:</strong> NWBKGB2L</li>
-    </ul>
-</div>
+<?php endforeach; ?>

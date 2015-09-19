@@ -16,9 +16,10 @@ namespace Application\Controller {
             $args->slug = Slugs::HOME;
             $home = $wpRepo->fetchCategoryPosts($args);
             
-            return array('model' => $this->serializer->serialize(array(
+            return array(
                 'posts'          => $home,
-                'qurbanidetails' => $qurbaniRepo->getQurbaniDetails()
+                'model' => $this->serializer->serialize(array(
+                    'qurbanidetails' => $qurbaniRepo->getQurbaniDetails()
             ), 'json'));
         }
         
