@@ -41,7 +41,7 @@ namespace("ekda.index").IndexModel = function (data) {
             '</div> ';
 
             bootbox.dialog({
-                title: "On behalf of ?",
+                title: (self.disableInstructions() ? "Contact Details" : "On behalf of ?"),
                 message: message,
                 buttons: {
                     cancel: {

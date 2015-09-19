@@ -19,6 +19,7 @@ namespace("ekda.index").QurbaniDonation = function (data, details) {
     
     self.donationid = !data ? null : data.donationid;
     self.isvoid = ko.observable(!data ? null : data.isvoid);
+    self.iscomplete = !data ? null : data.iscomplete;
     self.createddate = !data ? null : data.createddate;
     
     self.sheepCost = ko.computed(function () {

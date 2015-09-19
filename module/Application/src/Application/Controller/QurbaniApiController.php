@@ -27,6 +27,36 @@ namespace Application\Controller {
             }
         }
         
+        public function sendqurbanicompletealertAction() {
+            try {
+                $authService = $this->getServiceLocator()->get('AdminAuthService');
+
+                if (!$authService->hasIdentity()) {
+                    throw new \Exception("Unauthorized Access");
+                }
+                
+                $qurbanikey = $this->params()->fromRoute('p1');
+                
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                $gMailSvc = $this->getServiceLocator()->get('GMailSvc');
+
+                $qurbani = $qurbaniRepo->getQurbani($qurbanikey);
+                
+                if ($qurbani != null && !$qurbani->getIscomplete()) {
+                    $gMailSvc->qurbaniCompleteAlert($qurbani);
+                    $qurbani->setIscomplete(1);
+                    $qurbaniRepo->updateQurbani($qurbani);
+                }
+                
+                $response = ResponseUtils::createResponse();
+                return $this->jsonResponse($response);
+                
+            } catch (\Exception $ex) {
+                $response = ResponseUtils::createExceptionResponse($ex);
+                return $this->jsonResponse($response);
+            }
+        }
+        
         public function updatequrbaniAction() {
             try {
                 $authService = $this->getServiceLocator()->get('AdminAuthService');

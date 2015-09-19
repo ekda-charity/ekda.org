@@ -114,6 +114,14 @@ class Qurbani
     private $isvoid;
     
     /**
+     * @Type("integer")
+     * @var integer
+     *
+     * @ORM\Column(name="iscomplete", type="integer", nullable=false)
+     */
+    private $iscomplete;
+    
+    /**
      * @Type("DateTime<'Y-m-d\TH:i:sO'>")
      * @var \DateTime
      *
@@ -135,6 +143,7 @@ class Qurbani
             $this->instructions = $qurbani->getInstructions();
             $this->donationid = $qurbani->getDonationid();
             $this->isvoid = $qurbani->getIsvoid();
+            $this->iscomplete = $qurbani->getIscomplete();
             $this->createddate = $qurbani->getCreateddate();
         }
     }
@@ -151,6 +160,7 @@ class Qurbani
     function getInstructions() { return $this->instructions; }
     function getDonationid() { return $this->donationid; }    
     function getIsvoid() { return $this->isvoid; }    
+    function getIscomplete() { return $this->iscomplete; }
     function getCreateddate() { return $this->createddate; }    
 
     function setQurbanikey($val) { $this->qurbanikey = $val; }
@@ -165,5 +175,6 @@ class Qurbani
     function setInstructions($val) { $this->instructions = $val; }
     function setDonationid($val) { $this->donationid = $val; }
     function setIsvoid($val) { $this->isvoid = $val; }
+    function setIscomplete($val) { $this->iscomplete = $val; }
     function setCreateddate($val) { $this->createddate = $val; }
 }

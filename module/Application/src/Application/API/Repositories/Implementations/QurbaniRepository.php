@@ -31,6 +31,10 @@ namespace Application\API\Repositories\Implementations {
             $this->details->disableinstructionsdate = $qurbaniDetails["disableinstructionsdate"];
         }
 
+        public function getQurbani($qurbanikey) {
+            return $this->qurbaniRepo->fetch($qurbanikey);
+        }
+        
         public function toggleQurbaniVoid($qurbanikey) {
             $repo = $this->qurbaniRepo->repository;
             $qurbani = $repo->find($qurbanikey);
@@ -149,6 +153,7 @@ namespace Application\API\Repositories\Implementations {
             $qurbani->setDonationid($confirmDonation ? QurbaniRepository::DONATION_ID : null);
             $qurbani->setQurbanimonth($this->details->qurbanimonth);
             $qurbani->setIsvoid(0);
+            $qurbani->setIscomplete(0);
             
             $this->em->transactional(function(EntityManager $em) use($qurbani) {
                 $em->persist($qurbani);

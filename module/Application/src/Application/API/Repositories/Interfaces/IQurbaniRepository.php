@@ -5,6 +5,7 @@ namespace Application\API\Repositories\Interfaces {
     use Application\API\Canonicals\Entity\Qurbani;
     
     interface IQurbaniRepository {
+        public function getQurbani($qurbanikey);
         public function toggleQurbaniVoid($qurbanikey);
         public function updateQurbani(Qurbani $qurbani);
         public function validateRequest(Qurbani $qurbani);

@@ -35,3 +35,7 @@ DEFAULT CHARACTER SET = latin1
 
 ALTER TABLE `Qurbanis` 
 ADD COLUMN `isvoid` INT(1) NOT NULL DEFAULT 0 AFTER `donationid`;
+
+
+ALTER TABLE `ekda`.`Qurbanis` 
+ADD COLUMN `iscomplete` INT(1) NOT NULL DEFAULT '0' AFTER `isvoid`;

@@ -6,7 +6,8 @@ namespace Application\API\Repositories\Implementations {
         Application\API\Repositories\Interfaces\IEMailService,
         Application\API\Repositories\Interfaces\IGeneralMailingService,
         Application\API\Canonicals\Dto\Email,
-        Application\API\Canonicals\Dto\EmailRequest;
+        Application\API\Canonicals\Dto\EmailRequest,
+        Application\API\Canonicals\Entity\Qurbani;
 
     class GeneralMailingService extends BaseRepository implements IGeneralMailingService {
         
@@ -72,6 +73,44 @@ namespace Application\API\Repositories\Implementations {
 
             $recipients = $this->isNotProduction ? $this->supportEmail : $qurbani->getEmail();
             $this->emailRepository->sendMail($this->defaultSender, $recipients, $subject, null, $htmlBody);
+        }
+
+        public function qurbaniCompleteAlert(Qurbani $qurbani) {
+            if (!$qurbani->getIscomplete()) {
+                $subject = "Your Qurbani has been done";
+                $htmlBody = "
+                    <html>
+                    <head></head>
+                    <body>
+                    <p>
+                    Salam Aleikum,<br/>
+                    This is to confirm that your qurbani as follows has been done:
+                    <ul>
+                    <li><strong>Sheep:</strong> " . $qurbani->getSheep() . "</li>
+                    <li><strong>Cows:</strong> " . $qurbani->getCows() . "</li>
+                    <li><strong>Camels:</strong> " . $qurbani->getCamels() . "</li>" .
+
+                    ($qurbani->getInstructions() == null ? "" : "<li><strong>On Behalf of:</strong> <br/>" . nl2br($qurbani->getInstructions()) . "</li>").
+
+                    "</ul>
+                    <br/>
+                    We would like to take this opportunity to thank you for your donation. May Allah accept it from you. Amin.<br/>
+                    <br/>
+                    Shukran<br/>
+                    The Projects Team, EKDA<br/>
+                    11B Sunnybank Road<br/>
+                    Aberdeen, United Kingdom<br/>
+                    AB24 3NJ<br/>
+                    www.ekda.org<br/>
+                    Scottish Charity Reg No: SC041294<br/>
+                    </p>
+                    </body>
+                    </html>
+                ";
+
+                $recipients = $this->isNotProduction ? $this->supportEmail : $qurbani->getEmail();
+                $this->emailRepository->sendMail($this->defaultSender, $recipients, $subject, null, $htmlBody);
+            }
         }
     }
 }

@@ -79,7 +79,7 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
             '</div> ';
 
             bootbox.dialog({
-                title: "On behalf of ?",
+                title: (self.disableInstructions() ? "Contact Details" : "On behalf of ?"),
                 message: message,
                 buttons: {
                     cancel: {
@@ -167,7 +167,7 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
         ajaxGet(url, function (response) {
             lad.stop();
             if (!response.search.success) {
-                toastrErrorFromList(response.errors, "Search Failed");
+                toastrErrorFromList(response.search.errors, "Search Failed");
             } else {
                 self.results(response.search.items);
                 self.details(response.details);
@@ -175,6 +175,29 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
                 self.qurbani.details(response.details);
             }
         });        
+    };
+
+    self.sendQurbaniCompleteAlert = function (item) {
+        if (item.iscomplete) {
+            toastrWarning("An email has already been sent");
+        } else {
+            var msg = "This will send an email to the donor. Are you sure?";
+
+            bootbox.confirm(msg, function(result) {
+                if (result) {
+                    var url = "/api/QurbaniApi/sendqurbanicompletealert/" + item.qurbanikey;
+
+                    ajaxGet(url, function (response) {
+                        if (!response.success) {
+                            toastrErrorFromList(response.errors, "Alert Email Failed");
+                        } else {
+                            self.searchQurbani();
+                            toastrSuccess("Alert was sent emails");
+                        }
+                    });        
+                }
+            });
+        }
     };
 
     self.editDonation = function (item) {
