@@ -29,6 +29,7 @@ namespace Application\API\Repositories\Implementations {
             $this->details->shorturl = $qurbaniDetails["shorturl"];
             $this->details->qurbanimonth = $qurbaniDetails["qurbanimonth"];
             $this->details->disableinstructionsdate = $qurbaniDetails["disableinstructionsdate"];
+            $this->details->closingdate = $qurbaniDetails["closingdate"];
         }
 
         public function getQurbani($qurbanikey) {

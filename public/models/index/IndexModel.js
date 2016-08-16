@@ -7,11 +7,16 @@ namespace("ekda.index").IndexModel = function (data) {
     self.posts = data.posts;
     self.qurbani = new ekda.index.QurbaniDonation(null, data.qurbanidetails);
     self.disableinstructionsdate = data.qurbanidetails.disableinstructionsdate;
+    self.closingdate = data.qurbanidetails.closingdate;
     self.qurbaniseason = !data.qurbanidetails.qurbaniseason ? false : true;
-    self.numbers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+    self.numbers = _.range(51);
     
     self.disableInstructions = ko.computed(function () {
         return moment() >= moment(self.disableinstructionsdate);
+    });
+    
+    self.closed = ko.computed(function () {
+        return moment() >= moment(self.closingdate);
     });
     
     self.donate = function (data, e) {

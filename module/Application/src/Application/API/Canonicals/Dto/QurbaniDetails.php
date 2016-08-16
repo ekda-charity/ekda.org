@@ -54,5 +54,10 @@ namespace Application\API\Canonicals\Dto {
          * @Type("DateTime<'Y-m-d\TH:i:sO'>")
          */
         public $disableinstructionsdate;
+        
+        /**
+         * @Type("DateTime<'Y-m-d\TH:i:sO'>")
+         */
+        public $closingdate;
     }
 }

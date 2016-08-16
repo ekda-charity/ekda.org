@@ -3,7 +3,7 @@
 namespace("ekda.admin").QurbaniViewModel = function (qurbani, details, callback) {
     var self = this;
     
-    self.numbers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+    self.numbers = _.range(51);
     self.qurbani = new ekda.index.QurbaniDonation(qurbani, details);
     self.callback = callback;
 
