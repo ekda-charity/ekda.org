@@ -57,6 +57,7 @@ namespace Application\API\Repositories\Implementations {
                 <li><strong>Camels:</strong> " . $qurbani->getCamels() . "</li>
                 <li><strong>On Behalf of:</strong> <br/>" . nl2br($qurbani->getInstructions()) . "</li>
                 </ul>
+                <br/>
                 Inshaa Allah we will send you a Confirmation once the Sacrifice has been performed.<br/>
                 <br/>
                 Shukran<br/>
