@@ -81,10 +81,10 @@
                 <th class="col-md-1">Sheep</th>
                 <th class="col-md-1">Cows</th>
                 <th class="col-md-1">Camels</th>
-                <th class="col-md-6">Instructions</th>
+                <th class="col-md-5">Instructions</th>
                 <th class="col-md-1">ID</th>
                 <th class="col-md-1">Date</th>
-                <th class="col-md-1">Actions</th>
+                <th class="col-md-2">Actions</th>
             </tr>
         </thead>
 
@@ -104,7 +104,7 @@
                     <span class="break-word newline-text" data-bind="html: instructions"></span>
                 </td>
                 <td data-bind="text: donationid"></td>
-                <td data-bind="text: moment(createddate).format('DD/MM')"></td>
+                <td data-bind="text: moment(createddate).format('DD/MMM/YY')"></td>
                 <td>
                     <span class="fa fa-pencil pointer-cursor"
                           data-toggle="modal" data-target="#qurbaniModal"
