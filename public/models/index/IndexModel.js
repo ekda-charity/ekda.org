@@ -37,7 +37,7 @@ namespace("ekda.index").IndexModel = function (data) {
                     '<form class="form-horizontal"> ' +
                         '<div class="form-group"> ' +
                             '<div class="col-md-12"> ' +
-                                (self.disableInstructions() ? '' : '<textarea type="text" id="qurbaniName" name="name" class="form-control input-md" rows="3" placeholder="Names (Optional)"></textarea>') +
+                                (self.disableInstructions() ? '' : '<textarea type="text" id="qurbaniName" name="name" class="form-control input-md" rows="3" placeholder="Names, one per line (Optional)"></textarea>') +
                                 '<input id="qurbaniEmail" name="email" type="text" placeholder="Email (To alert you after Qurbani)" class="form-control input-md top5"> ' +
                             '</div> ' +
                         '</div> ' +
