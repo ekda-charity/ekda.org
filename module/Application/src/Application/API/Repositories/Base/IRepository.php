@@ -15,10 +15,12 @@ namespace Application\API\Repositories\Base {
         public function count(array $criteria);
         public function total();
         public function add($entity);
+        public function addList(array $entities);
         public function addOrUpdate($entity);
         public function update($entity);
         public function delete($entity);
         public function deleteList(array $entities);
         public function deleteByKey($id);
+        public function deleteListByKeys(array $ids);
     }
 }

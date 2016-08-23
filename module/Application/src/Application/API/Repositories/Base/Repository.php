@@ -110,6 +110,14 @@ namespace Application\API\Repositories\Base {
                 $em->persist($entity);
             });
         }
+        
+        public function addList(array $entities) {
+            $this->em->transactional(function(EntityManager $em) use($entities) {
+                foreach ($entities as $entity) {
+                    $em->persist($entity);
+                }
+            });
+        }
 
         public function addOrUpdate($entity) {
             $repo = $this->repository;
@@ -201,5 +209,22 @@ namespace Application\API\Repositories\Base {
                 }
             });
         }
-   }
+        
+        public function deleteListByKeys(array $ids) {
+            $repo = $this->repository;
+            
+            $this->em->transactional(function(EntityManager $em) use($ids, $repo) {
+                
+                foreach($ids as $id) {
+                    $oneRecord = $repo->find($id);
+
+                    if ($oneRecord != null) {
+                        $em->remove($oneRecord);
+                    } else {
+                        throw new \Exception("Could not find matching record to delete");
+                    }
+                }
+            });
+        }
+    }
 }
