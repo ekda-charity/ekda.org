@@ -17,5 +17,6 @@ namespace Application\API\Repositories\Interfaces {
         public function getPurchasedCows();
         public function getPurchasedCamels();
         public function search($page = 0, $pageSize = 25, $purchasedOnly = true, $includeVoid = false);
+        public function getQurbaniExcel($page = 0, $pageSize = 25, $purchasedOnly = true, $includeVoid = false);
     }
 }

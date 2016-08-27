@@ -109,6 +109,35 @@ namespace Application\Controller {
             }
         }
         
+        public function downloadqurbaniAction() {
+            try {
+                $authService = $this->getServiceLocator()->get('AdminAuthService');
+
+                if (!$authService->hasIdentity()) {
+                    throw new \Exception("Unauthorized Access");
+                }
+                
+                $purchasedonly = $this->params()->fromRoute('p1');
+                $includevoid = $this->params()->fromRoute('p2');
+                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
+                
+                $objPHPExcel = $qurbaniRepo->getQurbaniExcel(0, PHP_INT_MAX, $purchasedonly, $includevoid);
+                $details = $qurbaniRepo->getQurbaniDetails();
+                $name = $details->qurbanimonth . ".xlsx";
+                
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="' . $name . '"');
+                header('Cache-Control: max-age=0');
+                $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+                $objWriter->save('php://output');
+                exit;
+                
+            } catch (\Exception $ex) {
+                $this->addFlashErrorMsgs([$ex->getMessage()]);
+                return $this->redirect("/Admin/qurbani");
+            }
+        }
+        
         public function getstockAction(){
             try {
                 $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');

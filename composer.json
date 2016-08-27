@@ -14,6 +14,8 @@
         "doctrine/doctrine-orm-module": "0.*",
         "symfony/serializer": "2.5.*@dev",
         "symfony/http-foundation": "2.5.*@dev",
+        "tecnickcom/tcpdf": "6.0.055",
+        "phpoffice/phpexcel": "1.8.0",
         "neilime/zf2-assets-bundle": "dev-master",
         "jms/serializer": "~0.16"
     }

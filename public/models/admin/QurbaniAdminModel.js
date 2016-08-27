@@ -177,6 +177,14 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
         });        
     };
 
+    self.downloadQurbani = function () {
+        var po = self.purchasedonly() ? 1 : 0;
+        var iv = self.includevoid() ? 1 : 0;
+        var url = "/api/QurbaniApi/downloadqurbani/" + po + "/" + iv;
+
+        window.location.href = url;
+    };
+    
     self.sendQurbaniCompleteAlert = function (item) {
         if (item.iscomplete) {
             toastrWarning("An email has already been sent");

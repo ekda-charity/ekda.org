@@ -262,5 +262,43 @@ namespace Application\API\Repositories\Implementations {
             
             return ResponseUtils::createSearchResponse($total, $items, $page, $pageSize, $errors);            
         }
+        
+        public function getQurbaniExcel($page = 0, $pageSize = 25, $purchasedOnly = true, $includeVoid = false) {
+            $qurbani = $this->search($page, $pageSize, $purchasedOnly, $includeVoid);
+            
+            $objPHPExcel = new \PHPExcel();
+            $objPHPExcel->setActiveSheetIndex(0);
+            $objPHPExcel->getActiveSheet()->setTitle($this->details->qurbanimonth);
+
+            $row = 1;
+            $objPHPExcel->getActiveSheet()->SetCellValue("A$row", 'Month');
+            $objPHPExcel->getActiveSheet()->SetCellValue("B$row", 'Sheep');
+            $objPHPExcel->getActiveSheet()->SetCellValue("C$row", 'Cows');
+            $objPHPExcel->getActiveSheet()->SetCellValue("D$row", 'Camels');
+            $objPHPExcel->getActiveSheet()->SetCellValue("E$row", 'Total');
+            $objPHPExcel->getActiveSheet()->SetCellValue("F$row", 'Fullname');
+            $objPHPExcel->getActiveSheet()->SetCellValue("G$row", 'Email');
+            $objPHPExcel->getActiveSheet()->SetCellValue("H$row", 'Mobile');
+            $objPHPExcel->getActiveSheet()->SetCellValue("I$row", 'Instructions');
+            $objPHPExcel->getActiveSheet()->SetCellValue("J$row", 'DonationID');
+            $objPHPExcel->getActiveSheet()->SetCellValue("K$row", 'Date');
+            
+            foreach($qurbani->items as $pr) {
+                $row++;
+                $objPHPExcel->getActiveSheet()->SetCellValue("A$row", $pr->getQurbanimonth());
+                $objPHPExcel->getActiveSheet()->SetCellValue("B$row", $pr->getSheep());
+                $objPHPExcel->getActiveSheet()->SetCellValue("C$row", $pr->getCows());
+                $objPHPExcel->getActiveSheet()->SetCellValue("D$row", $pr->getCamels());
+                $objPHPExcel->getActiveSheet()->SetCellValue("E$row", $pr->getTotal());
+                $objPHPExcel->getActiveSheet()->SetCellValue("F$row", $pr->getFullname());
+                $objPHPExcel->getActiveSheet()->SetCellValue("G$row", $pr->getEmail());
+                $objPHPExcel->getActiveSheet()->SetCellValue("H$row", $pr->getMobile());
+                $objPHPExcel->getActiveSheet()->SetCellValue("I$row", $pr->getInstructions());
+                $objPHPExcel->getActiveSheet()->SetCellValue("J$row", $pr->getDonationid());
+                $objPHPExcel->getActiveSheet()->SetCellValue("K$row", $pr->getCreateddate()->format("d/MM/y"));
+            }
+            
+            return $objPHPExcel;
+        }        
     }
 }
