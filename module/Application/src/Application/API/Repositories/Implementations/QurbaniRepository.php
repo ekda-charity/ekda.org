@@ -295,7 +295,7 @@ namespace Application\API\Repositories\Implementations {
                 $objPHPExcel->getActiveSheet()->SetCellValue("H$row", $pr->getMobile());
                 $objPHPExcel->getActiveSheet()->SetCellValue("I$row", $pr->getInstructions());
                 $objPHPExcel->getActiveSheet()->SetCellValue("J$row", $pr->getDonationid());
-                $objPHPExcel->getActiveSheet()->SetCellValue("K$row", $pr->getCreateddate()->format("d/MM/y"));
+                $objPHPExcel->getActiveSheet()->SetCellValue("K$row", $pr->getCreateddate()->format("Y-m-d H:i:s"));
             }
             
             return $objPHPExcel;
