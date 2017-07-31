@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.php.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
-            <name>ekda_master</name>
+            <name>ekda_local</name>
         </data>
         <libraries xmlns="http://www.netbeans.org/ns/cdnjs-libraries/1">
             <library name="lodash.js" version="4.15.0">

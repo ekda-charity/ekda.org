@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl http://ekda_master/BatchMail/send
+curl http://ekda_local/BatchMail/send

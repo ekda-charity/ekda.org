@@ -70,7 +70,7 @@ class Module
 
     private function initializeAnalyticsTrackingID(MvcEvent $e) {
         $config = $e->getTarget()->getServiceManager()->get('Config');
-        $analyticsTrackingID = $config['AnalyticsTrackingID']['ID'];
+        $analyticsTrackingID = $config['AnalyticsTrackingID'];
         $e->getViewModel()->setVariable('analyticsTrackingID', $analyticsTrackingID);
     }
 }
