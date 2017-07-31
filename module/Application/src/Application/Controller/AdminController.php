@@ -2,34 +2,35 @@
 
 namespace Application\Controller {
     
+    use Zend\Navigation\AbstractContainer;
+    use Zend\Authentication\AuthenticationServiceInterface;
+    use JMS\Serializer\SerializerInterface;
     use Application\API\Canonicals\General\Constants;
-    use JMS\Serializer\SerializationContext;
     
     class AdminController extends BaseController  {
         
+        public function __construct(AbstractContainer $navService, AuthenticationServiceInterface $authService, SerializerInterface $serializer) {
+            parent::__construct($navService, $authService, $serializer);
+        }
+        
         public function indexAction() {
-            $this->getServiceLocator()->get('Navigation')->findOneById(Constants::ADMIN_ID)->setVisible(true);
-            $this->getServiceLocator()->get('Navigation')->findOneById(Constants::ADMIN_ID)->setActive(true);
-            $authService = $this->getServiceLocator()->get('AdminAuthService');
+            $this->navService->findOneById(Constants::ADMIN_ID)->setVisible(true);
+            $this->navService->findOneById(Constants::ADMIN_ID)->setActive(true);
             
-            if ($authService->hasIdentity()) {
+            if ($this->authService->hasIdentity()) {
                 return $this->redirect()->toUrl("/Admin/qurbani");
+            } else {
+                return [];
             }
-            
-            return array();
         }
         
         public function logoutAction() {
-            $authService = $this->getServiceLocator()->get('AdminAuthService');
-            $authStorage = $this->getServiceLocator()->get('AdminAuthStorage');
-            
-            $authStorage->forgetMe();
-            $authService->clearIdentity();
+            $this->authService->clearIdentity();
             return $this->redirect()->toUrl("/Admin/index");
         }
         
         public function qurbaniAction() {
-            return array();
+            return [];
         }
     }
 }

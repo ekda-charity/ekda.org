@@ -1,22 +1,20 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
+    "name": "EKDA",
+    "description": "EKDA CHarity",
     "license": "BSD-3-Clause",
     "keywords": [
-        "framework",
-        "zf2"
+        "EKDA",
+        "Charity"
     ],
-    "homepage": "http://framework.zend.com/",
+    "homepage": "https://ekda.org/",
     "require": {
         "php": ">=5.5",
         "zendframework/zendframework": "~2.5",
-        "doctrine/dbal": "2.3.4",
         "doctrine/doctrine-orm-module": "0.*",
         "symfony/serializer": "2.5.*@dev",
         "symfony/http-foundation": "2.5.*@dev",
+        "phpoffice/phpexcel": "1.8.1",
         "tecnickcom/tcpdf": "6.0.055",
-        "phpoffice/phpexcel": "1.8.0",
-        "neilime/zf2-assets-bundle": "dev-master",
         "jms/serializer": "~0.16"
     }
 }

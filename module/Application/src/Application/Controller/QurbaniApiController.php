@@ -2,21 +2,45 @@
 
 namespace Application\Controller {
     
+    use Zend\Navigation\AbstractContainer;
+    use Zend\Authentication\AuthenticationServiceInterface;
+    use JMS\Serializer\SerializerInterface;
     use Application\API\Canonicals\Response\ResponseUtils;
+    use Application\API\Repositories\Interfaces\IGeneralMailingService;
+    use Application\API\Repositories\Interfaces\IQurbaniRepository;
 
     class QurbaniApiController extends BaseController {
         
+        /**
+         * @var IGeneralMailingService 
+         */
+        private $gMailSvc;
+        
+        /**
+         * @var IQurbaniRepository 
+         */
+        private $qurbaniRepo;
+
+        /**
+         * @var string
+         */
+        private $domainName;
+        
+        public function __construct(AbstractContainer $navService, AuthenticationServiceInterface $authService, SerializerInterface $serializer, IQurbaniRepository $qurbaniRepo, IGeneralMailingService $gMailSvc, $domainName) {
+            parent::__construct($navService, $authService, $serializer);
+            $this->gMailSvc = $gMailSvc;
+            $this->qurbaniRepo = $qurbaniRepo;
+            $this->domainName = $domainName;
+        }
+        
         public function togglequrbanivoidAction() {
             try {
-                $authService = $this->getServiceLocator()->get('AdminAuthService');
-
-                if (!$authService->hasIdentity()) {
+                if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
                 
                 $qurbaniKey = $this->params()->fromRoute('p1');
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $donation = $qurbaniRepo->toggleQurbaniVoid($qurbaniKey);
+                $donation = $this->qurbaniRepo->toggleQurbaniVoid($qurbaniKey);
                 
                 $response = ResponseUtils::createWriteResponse($donation);
                 return $this->jsonResponse($response);
@@ -29,23 +53,18 @@ namespace Application\Controller {
         
         public function sendqurbanicompletealertAction() {
             try {
-                $authService = $this->getServiceLocator()->get('AdminAuthService');
-
-                if (!$authService->hasIdentity()) {
+                
+                if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
                 
                 $qurbanikey = $this->params()->fromRoute('p1');
-                
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $gMailSvc = $this->getServiceLocator()->get('GMailSvc');
-
-                $qurbani = $qurbaniRepo->getQurbani($qurbanikey);
+                $qurbani = $this->qurbaniRepo->getQurbani($qurbanikey);
                 
                 if ($qurbani != null && !$qurbani->getIscomplete()) {
-                    $gMailSvc->qurbaniCompleteAlert($qurbani);
+                    $this->gMailSvc->qurbaniCompleteAlert($qurbani);
                     $qurbani->setIscomplete(1);
-                    $qurbaniRepo->updateQurbani($qurbani);
+                    $this->qurbaniRepo->updateQurbani($qurbani);
                 }
                 
                 $response = ResponseUtils::createResponse();
@@ -59,17 +78,15 @@ namespace Application\Controller {
         
         public function updatequrbaniAction() {
             try {
-                $authService = $this->getServiceLocator()->get('AdminAuthService');
 
-                if (!$authService->hasIdentity()) {
+                if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
                 
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
                 
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $donation = $qurbaniRepo->updateQurbani($data);
+                $donation = $this->qurbaniRepo->updateQurbani($data);
                 
                 $response = ResponseUtils::createWriteResponse($donation);
                 return $this->jsonResponse($response);
@@ -82,20 +99,17 @@ namespace Application\Controller {
         
         public function searchqurbaniAction() {
             try {
-                $authService = $this->getServiceLocator()->get('AdminAuthService');
 
-                if (!$authService->hasIdentity()) {
+                if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
                 
                 $purchasedonly = $this->params()->fromRoute('p1');
                 $includevoid = $this->params()->fromRoute('p2');
                 
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                
-                $search = $qurbaniRepo->search(0, PHP_INT_MAX, $purchasedonly, $includevoid);
-                $details = $qurbaniRepo->getQurbaniDetails();
-                $stock = $qurbaniRepo->getStock();
+                $search = $this->qurbaniRepo->search(0, PHP_INT_MAX, $purchasedonly, $includevoid);
+                $details = $this->qurbaniRepo->getQurbaniDetails();
+                $stock = $this->qurbaniRepo->getStock();
                 
                 return $this->jsonResponse(array(
                     'search' => $search,
@@ -111,18 +125,16 @@ namespace Application\Controller {
         
         public function downloadqurbaniAction() {
             try {
-                $authService = $this->getServiceLocator()->get('AdminAuthService');
 
-                if (!$authService->hasIdentity()) {
+                if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
                 
                 $purchasedonly = $this->params()->fromRoute('p1');
                 $includevoid = $this->params()->fromRoute('p2');
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
                 
-                $objPHPExcel = $qurbaniRepo->getQurbaniExcel(0, PHP_INT_MAX, $purchasedonly, $includevoid);
-                $details = $qurbaniRepo->getQurbaniDetails();
+                $objPHPExcel = $this->qurbaniRepo->getQurbaniExcel(0, PHP_INT_MAX, $purchasedonly, $includevoid);
+                $details = $this->qurbaniRepo->getQurbaniDetails();
                 $name = $details->qurbanimonth . ".xlsx";
                 
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -140,8 +152,7 @@ namespace Application\Controller {
         
         public function getstockAction(){
             try {
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $stock = $qurbaniRepo->getStock();
+                $stock = $this->qurbaniRepo->getStock();
                 
                 $response = ResponseUtils::createSingleFetchResponse($stock);
                 return $this->jsonResponse($response);
@@ -154,21 +165,18 @@ namespace Application\Controller {
         
         public function checkstockanddonateAction(){
             try {
-                $authService = $this->getServiceLocator()->get('AdminAuthService');
 
-                if (!$authService->hasIdentity()) {
+                if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
                 
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
 
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $qurbanikey = $qurbaniRepo->checkStockAndAddQurbani($data, true);
+                $qurbanikey = $this->qurbaniRepo->checkStockAndAddQurbani($data, true);
                 
                 if ($data->getEmail() != null) {
-                    $gMailSvc = $this->getServiceLocator()->get('GMailSvc');
-                    $gMailSvc->qurbaniConfrimationAlert($qurbanikey);
+                    $this->gMailSvc->qurbaniConfrimationAlert($qurbanikey);
                 }
                 
                 $response = ResponseUtils::createResponse();
@@ -185,16 +193,12 @@ namespace Application\Controller {
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
 
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $config = $this->getServiceLocator()->get('Config');
-
-                $domainname = $config["DomainName"];
-                $qurbaniDetails = $qurbaniRepo->getQurbaniDetails();
-                $qurbanikey = $qurbaniRepo->checkStockAndAddQurbani($data);
+                $qurbaniDetails = $this->qurbaniRepo->getQurbaniDetails();
+                $qurbanikey = $this->qurbaniRepo->checkStockAndAddQurbani($data);
                 
                 $shortUrl = $qurbaniDetails->shorturl;
                 $amount = $data->getTotal();
-                $exitUrl = "http://$domainname/api/QurbaniApi/confirmdonation/JUSTGIVING-DONATION-ID/$qurbanikey";
+                $exitUrl = "http://$this->domainName/api/QurbaniApi/confirmdonation/JUSTGIVING-DONATION-ID/$qurbanikey";
                 $redirectUrl = "http://www.justgiving.com/$shortUrl/4w350m3/donate?amount=$amount&exitUrl=$exitUrl";
 
                 $response = ResponseUtils::createSingleFetchResponse($redirectUrl);
@@ -211,16 +215,14 @@ namespace Application\Controller {
                 $donationId = $this->params()->fromRoute('p1');
                 $qurbanikey = $this->params()->fromRoute('p2');
                 
-                $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-                $qurbani = $qurbaniRepo->confirmDonation($qurbanikey, $donationId);
+                $qurbani = $this->qurbaniRepo->confirmDonation($qurbanikey, $donationId);
 
                 if ($qurbani->getEmail() != null) {
-                    $gMailSvc = $this->getServiceLocator()->get('GMailSvc');
-                    $gMailSvc->qurbaniConfrimationAlert($qurbani->getQurbanikey());
+                    $this->gMailSvc->qurbaniConfrimationAlert($qurbani->getQurbanikey());
                 }
                 
                 $donation = $qurbani->getSheep() . " sheep, " . $qurbani->getCows() . " cows, " . $qurbani->getCamels() . " camels";
-                $this->flashMessenger()->addSuccessMessage("Your Donation of $donation completed Successfully. May Allah reward you generously. Amin.");
+                $this->flashMessenger()->addSuccessMessage("Your Donation of $donation completed Successfully. Thank you for your Generosity.");
                 return $this->redirect()->toUrl("/");
                 
             } catch (\Exception $ex) {

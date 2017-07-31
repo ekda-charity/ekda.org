@@ -23,4 +23,5 @@ extras/documentation
 /config/autoload/qa.php
 /config/autoload/development.php
 /public/wordpress/
+/public/vendor/
 /data/deployscripts/

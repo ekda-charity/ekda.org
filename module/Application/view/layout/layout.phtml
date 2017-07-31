@@ -9,37 +9,37 @@
             ->appendName('viewport', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
-
+        
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css') 
-                ->appendStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-                ->appendStylesheet($this->basePath() . '/css/overrides.css')
-                ->appendStylesheet($this->basePath() . '/css/style.css')
-                ->appendStylesheet($this->basePath() . '/css/responsive.css')
-                ->appendStylesheet($this->basePath() . '/css/custom.css')
-                ->appendStylesheet($this->basePath() . '/js/toastr.js/css/toastr.css')
-                ->appendStylesheet($this->basePath() . '/js/ladda-bootstrap/ladda-themeless.min.css')
-                ->appendStylesheet($this->basePath() . '/js/font-awesome/css/font-awesome.css')
+                ->appendStylesheet($this->basePath() . '/vendor/bootstrap/dist/css/bootstrap.min.css') 
+                ->appendStylesheet($this->basePath() . '/vendor/bootstrap/dist/css/bootstrap-theme.min.css')
+                ->appendStylesheet($this->basePath() . '/vendor/toastr/toastr.min.css')
+                ->appendStylesheet($this->basePath() . '/vendor/ladda-bootstrap/dist/ladda-themeless.min.css')
+                ->appendStylesheet($this->basePath() . '/vendor/font-awesome/css/font-awesome.min.css')
+                ->appendStylesheet($this->basePath() . '/customcss/overrides.css')
+                ->appendStylesheet($this->basePath() . '/customcss/style.css')
+                ->appendStylesheet($this->basePath() . '/customcss/responsive.css')
+                ->appendStylesheet($this->basePath() . '/customcss/custom.css')
         ; ?>
 
         <!-- Scripts -->
         <?php $headScript = $this->headScript()
-                ->appendFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
-                ->appendFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                ->appendFile($this->basePath() . '/js/jquery.min.js')
-                ->appendFile($this->basePath() . '/js/bootstrap.min.js')
-                ->appendFile($this->basePath() . '/js/knockout/knockout-min.js')
-                ->appendFile($this->basePath() . '/js/knockout.mapping/knockout.mapping.js')
-                ->appendFile($this->basePath() . '/js/moment.js/moment.js')
-                ->appendFile($this->basePath() . '/js/moment.js/moment-timezone-with-data.min.js')
-                ->appendFile($this->basePath() . '/js/toastr.js/js/toastr.js')
-                ->appendFile($this->basePath() . '/js/ladda-bootstrap/spin.min.js')
-                ->appendFile($this->basePath() . '/js/ladda-bootstrap/ladda.min.js')
-                ->appendFile($this->basePath() . '/js/Cookies.js/cookies.js')
-                ->appendFile($this->basePath() . '/js/bootbox.js/bootbox.js')
-                ->appendFile($this->basePath() . '/js/lodash.js/lodash.min.js')
-                ->appendFile($this->basePath() . '/js/namespace.js')
+                ->appendFile($this->basePath() . '/vendor/html5shiv/dist/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+                ->appendFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->appendFile($this->basePath() . '/vendor/jquery/dist/jquery.min.js')
+                ->appendFile($this->basePath() . '/vendor/bootstrap/dist/js/bootstrap.min.js')
+                ->appendFile($this->basePath() . '/vendor/knockout/dist/knockout.js')
+                ->appendFile($this->basePath() . '/vendor/knockout.mapping/build/knockout.mapping.js')
+                ->appendFile($this->basePath() . '/vendor/moment/min/moment.min.js')
+                ->appendFile($this->basePath() . '/vendor/moment-timezone/builds/moment-timezone-with-data.min.js')
+                ->appendFile($this->basePath() . '/vendor/toastr/toastr.min.js')
+                ->appendFile($this->basePath() . '/vendor/ladda-bootstrap/dist/spin.min.js')
+                ->appendFile($this->basePath() . '/vendor/ladda-bootstrap/dist/ladda.min.js')
+                ->appendFile($this->basePath() . '/vendor/cookies.js/cookies.js')
+                ->appendFile($this->basePath() . '/vendor/bootbox.js/bootbox.js')
+                ->appendFile($this->basePath() . '/vendor/lodash/dist/lodash.min.js')
+                ->appendFile($this->basePath() . '/customjs/namespace.js')
         ; ?>
         
         <!-- Models -->
@@ -106,7 +106,7 @@
             
             <div class="row">
                 <div class="col-md-12 top10" id="EntryContentNode">
-                    <div style="display: none;" data-bind="visible: true">
+                    <div >
                         <?php echo $this->content; ?>
                     </div>
                 </div>

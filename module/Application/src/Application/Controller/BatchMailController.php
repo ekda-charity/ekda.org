@@ -3,27 +3,32 @@
 namespace Application\Controller {
     
     use Zend\Mvc\Controller\AbstractActionController;
-    use JMS\Serializer\SerializerBuilder;
     use JMS\Serializer\SerializationContext;
+    use JMS\Serializer\SerializerInterface;
+    use Application\API\Repositories\Interfaces\IEMailService;
     
     class BatchMailController extends AbstractActionController  {
         
         /**
-         * @var JMS\Serializer\SerializerInterface
+         * @var IEMailService
+         */
+        private $emailRepo;
+        
+        /**
+         * @var SerializerInterface
          */
         private $serializer;
         
-        public function __construct() {
-            $this->serializer = SerializerBuilder::create()->build();
+        public function __construct(IEMailService $emailRepo, SerializerInterface $serializer) {
+            $this->emailRepo = $emailRepo;
+            $this->serializer = $serializer;
         }
         
         public function sendAction() {
             try {
-                $emailRepo = $this->getServiceLocator()->get('EMailSvc');
-                
-                $emailKeys = $emailRepo->getMailFromServer();
-                $emailRepo->clearMailFromServer($emailKeys);
-                $emailRepo->sendMailFromDatabase();
+                $emailKeys = $this->emailRepo->getMailFromServer();
+                $this->emailRepo->clearMailFromServer($emailKeys);
+                $this->emailRepo->sendMailFromDatabase();
                 
             } catch (\Exception $ex) {
                 error_log($ex->getMessage());
@@ -37,8 +42,7 @@ namespace Application\Controller {
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Dto\ThirdPartyEmailTransport", "json");
 
-                $emailRepo = $this->getServiceLocator()->get('EMailSvc');
-                $emails = $emailRepo->fetchMail($data->mailapikey);
+                $emails = $this->emailRepo->fetchMail($data->mailapikey);
 
                 $context = new SerializationContext();
                 $context->setSerializeNull(true);
@@ -58,8 +62,7 @@ namespace Application\Controller {
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Dto\ThirdPartyEmailTransport", "json");
 
-                $emailRepo = $this->getServiceLocator()->get('EMailSvc');
-                $emailRepo->clearMail($data->mailapikey, $data->emailkeys);
+                $this->emailRepo->clearMail($data->mailapikey, $data->emailkeys);
 
             } catch (\Exception $ex) {
                 error_log($ex->getMessage());

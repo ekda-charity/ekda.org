@@ -5,22 +5,20 @@ namespace Application\API\Repositories\Factories {
     use Zend\ServiceManager\FactoryInterface,
         Zend\ServiceManager\ServiceLocatorInterface,
         Zend\Authentication\AuthenticationService,
-        Zend\Authentication\Adapter\DbTable;
+        Zend\Db\Adapter\Adapter,
+        Zend\Authentication\Adapter\DbTable,
+        Zend\Authentication\Storage\Session;
     
     class AdminAuthServiceFactory implements FactoryInterface {
         
         public function createService(ServiceLocatorInterface $serviceLocator) {
+            $config      = $serviceLocator->get('Config');
+            $dbAdapter   = new Adapter($config['doctrine']['connection']['orm_default']['params']);
             
-            $dbAdapter   = $serviceLocator->get('ZendDbAdapter');
-            $authStorage = $serviceLocator->get('AdminAuthStorage');
+            $authAdapter = new DbTable($dbAdapter, 'Users','username','password', '?');
+            $authStorage = new Session('CC688E0F_0C12_4680_9E92_EEE499C4A4B1');
             
-            $authAdapter = new DbTable($dbAdapter, 'Users','username','password', 'MD5(?)');
-            
-            $authService = new AuthenticationService();
-            $authService->setAdapter($authAdapter);
-            $authService->setStorage($authStorage);
-              
-            return $authService;
+            return new AuthenticationService($authStorage, $authAdapter);
         }
     }
 }

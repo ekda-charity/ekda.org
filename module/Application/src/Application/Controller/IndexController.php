@@ -2,35 +2,51 @@
 
 namespace Application\Controller {
     
+    use Zend\Navigation\AbstractContainer;
+    use Zend\Authentication\AuthenticationServiceInterface;
+    use JMS\Serializer\SerializerInterface;
     use Application\API\Canonicals\WordPress\SearchArgs;
     use Application\API\Canonicals\General\Constants;
     use Application\API\Canonicals\WordPress\Slugs;
+    use Application\API\Repositories\Interfaces\IWordPressRepository;
+    use Application\API\Repositories\Interfaces\IQurbaniRepository;
 
     class IndexController extends BaseController  {
         
+        /**
+         * @var IWordPressRepository 
+         */
+        private $wpRepo;
+        
+        /**
+         * @var IQurbaniRepository 
+         */
+        private $qurbaniRepo;
+        
+        public function __construct(AbstractContainer $navService, AuthenticationServiceInterface $authService, SerializerInterface $serializer, IWordPressRepository $wpRepo, IQurbaniRepository $qurbaniRepo) {
+            parent::__construct($navService, $authService, $serializer);
+            $this->wpRepo = $wpRepo;
+            $this->qurbaniRepo = $qurbaniRepo;
+        }
+        
         public function indexAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            $qurbaniRepo = $this->getServiceLocator()->get('QurbaniRepo');
-
             $args = new SearchArgs();
             $args->slug = Slugs::HOME;
-            $home = $wpRepo->fetchCategoryPosts($args);
+            $home = $this->wpRepo->fetchCategoryPosts($args);
             
             return array(
                 'posts'          => $home,
                 'model' => $this->serializer->serialize(array(
-                    'qurbanidetails' => $qurbaniRepo->getQurbaniDetails()
+                    'qurbanidetails' => $this->qurbaniRepo->getQurbaniDetails()
             ), 'json'));
         }
         
         public function newsAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
             $args = new SearchArgs();
             $args->slug = Slugs::NEWS;
             
-            $news = $wpRepo->fetchCategoryPosts($args);
-            $sidebar = $wpRepo->fetchMonthlySidebarInfo($args);
+            $news = $this->wpRepo->fetchCategoryPosts($args);
+            $sidebar = $this->wpRepo->fetchMonthlySidebarInfo($args);
             
             return array('model' => $this->serializer->serialize(array(
                 'news'    => $news,
@@ -39,11 +55,9 @@ namespace Application\Controller {
         }
         
         public function aboutAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
             $args = new SearchArgs();
             $args->slug = Slugs::ABOUT_US;
-            $about = $wpRepo->fetchCategoryPosts($args);
+            $about = $this->wpRepo->fetchCategoryPosts($args);
             
             return array('model' => $this->serializer->serialize(array(
                 'posts' => $about,
@@ -51,12 +65,10 @@ namespace Application\Controller {
         }
         
         public function projectsAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
             $args = new SearchArgs();
             $args->slug = Slugs::PROJECTS;
-            $projects = $wpRepo->fetchCategoryPosts($args);
-            $sidebar = $wpRepo->fetchPostsSidebarInfo($args);
+            $projects = $this->wpRepo->fetchCategoryPosts($args);
+            $sidebar = $this->wpRepo->fetchPostsSidebarInfo($args);
             
             return array('model' => $this->serializer->serialize(array(
                 'sidebar' => $sidebar,
@@ -65,11 +77,9 @@ namespace Application\Controller {
         }
         
         public function sponsorsAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
             $args = new SearchArgs();
             $args->slug = Slugs::SPONSORS;
-            $sponsors = $wpRepo->fetchCategoryPosts($args);
+            $sponsors = $this->wpRepo->fetchCategoryPosts($args);
             
             return array('model' => $this->serializer->serialize(array(
                 'posts' => $sponsors,
@@ -77,11 +87,9 @@ namespace Application\Controller {
         }
         
         public function donateAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
             $args = new SearchArgs();
             $args->slug = Slugs::DONATE;
-            $sponsors = $wpRepo->fetchCategoryPosts($args);
+            $sponsors = $this->wpRepo->fetchCategoryPosts($args);
             
             return array('model' => $this->serializer->serialize(array(
                 'posts' => $sponsors,
@@ -89,11 +97,9 @@ namespace Application\Controller {
         }
         
         public function contactsAction() {
-            $wpRepo = $this->getServiceLocator()->get('WordPrRepo');
-            
             $args = new SearchArgs();
             $args->slug = Slugs::CONTACTS;
-            $sponsors = $wpRepo->fetchCategoryPosts($args);
+            $sponsors = $this->wpRepo->fetchCategoryPosts($args);
             
             return array('model' => $this->serializer->serialize(array(
                 'posts' => $sponsors,
@@ -101,10 +107,9 @@ namespace Application\Controller {
         }
         
         public function previewAction() {
-            $this->getServiceLocator()->get('Navigation')->findOneById(Constants::PREVIEW_ID)->setVisible(true);
+            $this->navService->findOneById(Constants::PREVIEW_ID)->setVisible(true);
             
-            $wpRepo  = $this->getServiceLocator()->get('WordPrRepo');
-            $theLoop = $wpRepo->fetchTheLoop($this->getRequest()->getQuery()->toString());
+            $theLoop = $this->wpRepo->fetchTheLoop($this->getRequest()->getQuery()->toString());
             
             return array('model' => $this->serializer->serialize(array(
                 "posts" => $theLoop
