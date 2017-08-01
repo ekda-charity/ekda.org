@@ -14,7 +14,8 @@
         "symfony/serializer": "2.5.*@dev",
         "symfony/http-foundation": "2.5.*@dev",
         "phpoffice/phpexcel": "1.8.1",
-        "tecnickcom/tcpdf": "6.0.055",
+        "tecnickcom/tcpdf": "6.2.12",
+        "zendframework/zendservice-recaptcha": "~2.0",
         "jms/serializer": "~0.16"
     }
 }
