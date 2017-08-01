@@ -15,7 +15,7 @@ namespace Application\API\Repositories\Factories {
             $config      = $serviceLocator->get('Config');
             $dbAdapter   = new Adapter($config['doctrine']['connection']['orm_default']['params']);
             
-            $authAdapter = new DbTable($dbAdapter, 'Users','username','password', '?');
+            $authAdapter = new DbTable($dbAdapter, 'Users','username','password', 'md5(?)');
             $authStorage = new Session('CC688E0F_0C12_4680_9E92_EEE499C4A4B1');
             
             return new AuthenticationService($authStorage, $authAdapter);

@@ -124,6 +124,8 @@ namespace Application\Controller {
             }
 
             if ($hasAccess) { 
+                $baseNode->setLabel("Logout");
+                $baseNode->setAction("logout");                
                 return;
             }
 

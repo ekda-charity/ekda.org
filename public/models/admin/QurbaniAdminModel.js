@@ -25,7 +25,7 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
     });
     
     self.qurbaniseason = ko.computed(function () {
-        return !self.details() ? false : moment() >= moment(self.details().qurbaniseason);
+        return !self.details() ? false : self.details().qurbaniseason;
     });
     
     self.totalsheep = ko.computed(function () {
