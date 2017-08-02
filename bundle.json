@@ -1,0 +1,37 @@
+{
+    "customjs": {
+        "src": [
+            "public/vendor/jquery/dist/jquery.min.js",
+            "public/vendor/bootstrap/dist/js/bootstrap.min.js",
+            "public/vendor/knockout/dist/knockout.js",
+            "public/vendor/knockout.mapping/build/knockout.mapping.js",
+            "public/vendor/moment/min/moment.min.js",
+            "public/vendor/moment-timezone/builds/moment-timezone-with-data.min.js",
+            "public/vendor/toastr/toastr.min.js",
+            "public/vendor/ladda-bootstrap/dist/spin.min.js",
+            "public/vendor/ladda-bootstrap/dist/ladda.min.js",
+            "public/vendor/cookies.js/cookies.js",
+            "public/vendor/bootbox.js/bootbox.js",
+            "public/vendor/lodash/dist/lodash.min.js",
+            "public/customjs/namespace.js",
+            "public/models/utils/**/*.js",
+            "public/models/admin/**/*.js",
+            "public/models/index/**/*.js"
+        ],
+        "dest": "public/dist/bundle.js"
+    }, 
+    "customcss": {
+        "src": [
+            "public/vendor/bootstrap/dist/css/bootstrap.min.css",
+            "public/vendor/bootstrap/dist/css/bootstrap-theme.min.css",
+            "public/vendor/toastr/toastr.min.css",
+            "public/vendor/ladda-bootstrap/dist/ladda-themeless.min.css",
+            "public/vendor/font-awesome/css/font-awesome.min.css",
+            "public/customcss/overrides.css",
+            "public/customcss/style.css",
+            "public/customcss/responsive.css",
+            "public/customcss/custom.css"
+        ],
+        "dest": "public/dist/bundle.css"
+    }
+}

@@ -7,70 +7,84 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
+namespace Application {
 
-use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
+    use Zend\Mvc\ModuleRouteListener;
+    use Zend\Mvc\MvcEvent;
 
-class Module
-{
-    public function onBootstrap(MvcEvent $e)
-    {
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
+    class Module {
         
-        $this->initializeEnvironment($e);
-        $this->initializeMessages($e);
-        $this->initializeAnalyticsTrackingID($e);
-    }
+        public function onBootstrap(MvcEvent $e) {
+            $eventManager        = $e->getApplication()->getEventManager();
+            $moduleRouteListener = new ModuleRouteListener();
+            $moduleRouteListener->attach($eventManager);
 
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
+            $this->initializeEnvironment($e);
+            $this->initializeMessages($e);
+            $this->initializeAnalyticsTrackingID($e);
+            $this->initializeCustomCssJsFiles($e);
+        }
 
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+        public function getConfig() {
+            return include __DIR__ . '/config/module.config.php';
+        }
+
+        public function getAutoloaderConfig() {
+            return array(
+                'Zend\Loader\StandardAutoloader' => array(
+                    'namespaces' => array(
+                        __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                    ),
                 ),
-            ),
-        );
-    }
-    
-    private function initializeEnvironment(MvcEvent $e) {
-        $env = (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : (getenv('REDIRECT_APPLICATION_ENV') ? getenv('REDIRECT_APPLICATION_ENV') : 'development'));
-        $e->getViewModel()->setVariable('environment', $env);
-    }
-    
-    private function initializeMessages(MvcEvent $e) {
-        $flash = $e->getTarget()->getServiceManager()->get('ControllerPluginManager')->get('flashmessenger');            
-
-        if (count($flash->getSuccessMessages()) > 0) {
-            $e->getViewModel()->setVariable('succ', $flash->getSuccessMessages());
-        } 
-
-        if (count($flash->getInfoMessages()) > 0) {
-            $e->getViewModel()->setVariable('info', $flash->getInfoMessages());
+            );
         }
 
-        if (count($flash->getWarningMessages()) > 0) {
-            $e->getViewModel()->setVariable('warning', $flash->getInfoMessages());
+        private function initializeEnvironment(MvcEvent $e) {
+            $env = (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : (getenv('REDIRECT_APPLICATION_ENV') ? getenv('REDIRECT_APPLICATION_ENV') : 'development'));
+            $e->getViewModel()->setVariable('environment', $env);
         }
 
-        if (count($flash->getErrorMessages()) > 0) {
-            $e->getViewModel()->setVariable('err', $flash->getErrorMessages());
+        private function initializeMessages(MvcEvent $e) {
+            $flash = $e->getTarget()->getServiceManager()->get('ControllerPluginManager')->get('flashmessenger');            
+
+            if (count($flash->getSuccessMessages()) > 0) {
+                $e->getViewModel()->setVariable('succ', $flash->getSuccessMessages());
+            } 
+
+            if (count($flash->getInfoMessages()) > 0) {
+                $e->getViewModel()->setVariable('info', $flash->getInfoMessages());
+            }
+
+            if (count($flash->getWarningMessages()) > 0) {
+                $e->getViewModel()->setVariable('warning', $flash->getInfoMessages());
+            }
+
+            if (count($flash->getErrorMessages()) > 0) {
+                $e->getViewModel()->setVariable('err', $flash->getErrorMessages());
+            }
+
+            $flash->clearMessages();
         }
 
-        $flash->clearMessages();
-    }
+        private function initializeAnalyticsTrackingID(MvcEvent $e) {
+            $config = $e->getTarget()->getServiceManager()->get('Config');
+            $analyticsTrackingID = $config['AnalyticsTrackingID'];
+            $e->getViewModel()->setVariable('analyticsTrackingID', $analyticsTrackingID);
+        }
 
-    private function initializeAnalyticsTrackingID(MvcEvent $e) {
-        $config = $e->getTarget()->getServiceManager()->get('Config');
-        $analyticsTrackingID = $config['AnalyticsTrackingID'];
-        $e->getViewModel()->setVariable('analyticsTrackingID', $analyticsTrackingID);
+        private function initializeCustomCssJsFiles(MvcEvent $e) {
+            $render = $e->getTarget()->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
+            $config = $e->getTarget()->getServiceManager()->get('Config');
+
+            foreach($config['customcss'] as $item) {
+                $cssfile = str_replace ("public", "", $item);
+                $render->headLink()->appendStylesheet($cssfile);
+            }        
+
+            foreach($config['customjs'] as $item) {
+                $jsfile = str_replace ("public", "", $item);
+                $render->headScript()->appendFile($jsfile);
+            }
+        }
     }
 }

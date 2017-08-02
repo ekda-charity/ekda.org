@@ -102,9 +102,6 @@ namespace Application {
             'template_path_stack' => [
                 __DIR__ . '/../view',
             ],
-            'strategies' => array(
-                'ViewJsonStrategy',
-            ),
         ],
 
         'ENV' => (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : (getenv('REDIRECT_APPLICATION_ENV') ? getenv('REDIRECT_APPLICATION_ENV') : 'development')),
