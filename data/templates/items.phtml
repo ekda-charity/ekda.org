@@ -9,21 +9,21 @@
         <?php if ($noOfSheep > 0) :?>
         <tr>
             <td>Sheep &times; <?=$noOfSheep?></td>
-            <td><?=number_format($costOfSheep, 2, '.', '')?></td>
+            <td align="right"><?=number_format($costOfSheep, 2, '.', '')?></td>
         </tr>
         <?php endif; ?>
         
         <?php if ($noOfCows > 0) :?>
         <tr>
             <td>Cows &times; <?=$noOfCows?></td>
-            <td><?=number_format($costOfCows, 2, '.', '')?></td>
+            <td align="right"><?=number_format($costOfCows, 2, '.', '')?></td>
         </tr>
         <?php endif; ?>
         
         <?php if ($noOfCamels > 0) :?>
         <tr>
             <td>Camels &times; <?=$noOfCamels?></td>
-            <td><?=number_format($costOfCamels, 2, '.', '')?></td>
+            <td align="right"><?=number_format($costOfCamels, 2, '.', '')?></td>
         </tr>
         <?php endif; ?>
     </tbody>
@@ -31,7 +31,7 @@
     <tfoot>
         <tr>
             <td><strong>Total</strong></td>
-            <td><strong>&pound;<?=number_format($total, 2, '.', '')?></strong></td>
+            <td align="right"><strong>&pound;<?=number_format($total, 2, '.', '')?></strong></td>
         </tr>
     </tfoot>
 </table>
