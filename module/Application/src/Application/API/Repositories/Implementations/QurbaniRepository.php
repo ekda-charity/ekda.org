@@ -155,6 +155,7 @@ namespace Application\API\Repositories\Implementations {
             $qurbani->setQurbanimonth($this->details->qurbanimonth);
             $qurbani->setIsvoid(0);
             $qurbani->setIscomplete(0);
+            $qurbani->setCreateddate(new \DateTime("now", new \DateTimeZone("UTC")));
             
             $this->em->transactional(function(EntityManager $em) use($qurbani) {
                 $em->persist($qurbani);
