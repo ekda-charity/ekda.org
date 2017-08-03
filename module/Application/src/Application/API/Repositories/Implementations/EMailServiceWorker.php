@@ -2,7 +2,7 @@
 
 namespace Application\API\Repositories\Implementations {
     
-    use Application\API\Canonicals\Dto\Email,
+    use Application\API\Canonicals\Dto\EmailRequest,
         Zend\Mail\Transport\Smtp as SmtpTransport,
         Zend\Mail\Transport\SmtpOptions,
         Zend\Mail\Message,
@@ -14,7 +14,8 @@ namespace Application\API\Repositories\Implementations {
         private $host;
         private $port;
         private $auth;
-        
+        private $user;
+        private $pass;
         private $sender;
         private $recipients;
         private $subject;
@@ -23,16 +24,18 @@ namespace Application\API\Repositories\Implementations {
         private $bcc;
         
         
-        public function __construct($smtpDetails, Email $sender, $recipients, $subject, $textBody, $htmlBody = null, $bcc = false) {
+        public function __construct($smtpDetails, $smtpSender, $supportEmail, EmailRequest $request, $bcc = false) {
             $this->host = $smtpDetails['SMTP_HOST'];
             $this->port = $smtpDetails['SMTP_PORT'];
             $this->auth = $smtpDetails['SMTP_AUTH'];
+            $this->user = $smtpSender['username'];
+            $this->pass = $smtpSender['password'];
             
-            $this->sender = $sender;
-            $this->recipients = explode(",", $recipients);
-            $this->subject = $subject;
-            $this->textBody = $textBody;
-            $this->htmlBody = $htmlBody;
+            $this->sender = $supportEmail;
+            $this->recipients = explode(",", $request->recipient);
+            $this->subject = $request->subject;
+            $this->textBody = $request->textbody;
+            $this->htmlBody = $request->htmlbody;
             $this->bcc = $bcc;
         }
         
@@ -43,8 +46,9 @@ namespace Application\API\Repositories\Implementations {
                 'host'              => $this->host,
                 'port'              => $this->port,
                 'connection_config' => array(
-                    'username' => $this->sender->getUsername(),
-                    'password' => $this->sender->getPassword(),
+                    'username' => $this->user,
+                    'ssl'      => 'tls',
+                    'password' => $this->pass,
                 ),
             )));
             
@@ -53,7 +57,7 @@ namespace Application\API\Repositories\Implementations {
             }
             
             $message = new Message();
-            $message->addFrom($this->sender->getUsername())
+            $message->addFrom($this->sender)
                     ->setSubject($this->subject);
 
             if ($this->bcc) {

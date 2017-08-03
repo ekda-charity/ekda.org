@@ -13,7 +13,7 @@ namespace Application\API\Repositories\Factories {
             $em        = $serviceLocator->get('doctrine.entitymanager.orm_default');
             $emailRepo = $serviceLocator->get('EMailSvc');
             
-            return new GeneralMailingService($em, $emailRepo, $config['SMTPSender'], $config['SupportEmail'], $config['DomainName']);
+            return new GeneralMailingService($em, $emailRepo, $config['QurbaniDetails'], $config['DomainName']);
         }
     }
 }

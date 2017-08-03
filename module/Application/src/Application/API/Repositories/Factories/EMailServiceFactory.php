@@ -9,16 +9,10 @@ namespace Application\API\Repositories\Factories {
     class EMailServiceFactory implements FactoryInterface {
 
         public function createService(ServiceLocatorInterface $serviceLocator) {
-            $config               = $serviceLocator->get('Config');
-            $em                   = $serviceLocator->get('doctrine.entitymanager.orm_default');
-            $queueEmails          = $config['QueueEmails'];
-            $useThirdPartyEmailer = $config['UseThirdPartyEmailer'];
-            $privateKey           = $config['PrivateKey'];
-            $getMailApi           = $config['GetMailApi'];
-            $clearMailApi         = $config['ClearMailApi'];
-            $mailApiKey           = $config['MailApiKey'];
+            $config      = $serviceLocator->get('Config');
+            $em          = $serviceLocator->get('doctrine.entitymanager.orm_default');
             
-            return new EMailService($em, $config['SMTPDetails'], $queueEmails, $useThirdPartyEmailer, $privateKey, $getMailApi, $clearMailApi, $mailApiKey);
+            return new EMailService($em, $config['SMTPDetails'], $config['SMTPSender'], $config['SupportEmail'], $config['QueueEmails'], $config['SendToRecipient']);
         }
     }
 }

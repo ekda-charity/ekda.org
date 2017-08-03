@@ -169,7 +169,7 @@ namespace Application\Controller {
                 if (!$this->authService->hasIdentity()) {
                     throw new \Exception("Unauthorized Access");
                 }
-                
+
                 $jsonData = $this->getRequest()->getContent();
                 $data = $this->serializer->deserialize($jsonData, "Application\API\Canonicals\Entity\Qurbani", "json");
 
