@@ -12,13 +12,13 @@ namespace Application\API\Repositories\Implementations {
         
         private $emailRepository;
         private $qurbaniDetails;
-        private $domainName;
+        private $domainPath;
         
-        public function __construct(EntityManager $em, IEMailService $emailRepository, $qurbaniDetails, $domainName) {
+        public function __construct(EntityManager $em, IEMailService $emailRepository, $qurbaniDetails, $domainPath) {
             parent::__construct($em);
             $this->emailRepository = $emailRepository;
             $this->qurbaniDetails = $qurbaniDetails;
-            $this->domainName = $domainName;
+            $this->domainPath = $domainPath;
         }
         
         public function qurbaniConfrimationAlert($qurbaniKey) {
@@ -26,7 +26,7 @@ namespace Application\API\Repositories\Implementations {
             
             $template = new TemplateEngine("data/templates/qurbani-confirmation.phtml", [
                 'title' => "Confirmation",
-                'domainPath' => $this->domainName,
+                'domainPath' => $this->domainPath,
                 'instructions' => $qurbani->getInstructions(),
                 'noOfSheep' => $qurbani->getSheep(),
                 'noOfCows' => $qurbani->getCows(),
@@ -49,7 +49,7 @@ namespace Application\API\Repositories\Implementations {
             if (!$qurbani->getIscomplete()) {
                 $template = new TemplateEngine("data/templates/qurbani-complete.phtml", [
                     'title' => "Confirmation",
-                    'domainPath' => $this->domainName,
+                    'domainPath' => $this->domainPath,
                     'instructions' => $qurbani->getInstructions(),
                     'noOfSheep' => $qurbani->getSheep(),
                     'noOfCows' => $qurbani->getCows(),

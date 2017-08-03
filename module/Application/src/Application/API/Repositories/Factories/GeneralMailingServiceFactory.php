@@ -12,8 +12,9 @@ namespace Application\API\Repositories\Factories {
             $config    = $serviceLocator->get('Config');
             $em        = $serviceLocator->get('doctrine.entitymanager.orm_default');
             $emailRepo = $serviceLocator->get('EMailSvc');
+            $domainPath = ($config['ENV'] == "development" ? "http" : "https") . "://" . $config['DomainName'];
             
-            return new GeneralMailingService($em, $emailRepo, $config['QurbaniDetails'], $config['DomainName']);
+            return new GeneralMailingService($em, $emailRepo, $config['QurbaniDetails'], $domainPath);
         }
     }
 }
