@@ -13,18 +13,19 @@
                         <h4>Asalam Aleikum (Peace be upon you)</h4>
                         <p>
                             We thought you would like to know that your Qurbani has been performed.
-                            We would like to take this opportunity to thank you for your donation. May Allah accept it from you. Amin.
                         </p>
+                        
+                        <?php if ($instructions != null && strlen(trim($instructions)) > 0) :?>
+                            <h4 class="section-header">Your instructions to us</h4>
+                            <p><?=nl2br($instructions)?></p>
+                        <?php endif; ?>
 
                         <h4 class="section-header">Donation Details</h4>
                         <?php include("data/templates/items.phtml"); ?>
                         
-                        <?php if ($instructions != null && strlen(trim($instructions)) > 0) :?>
-                            <h4 class="section-header">Your instructions to us</h4>
-                            <p>The following were the instructions you gave:</p>
-                            <p><?=nl2br($instructions)?></p>
-                        <?php endif; ?>
-                        
+                        <p>
+                            We would like to take this opportunity to thank you for your donation. May Allah accept it from you. Amin.
+                        </p>
                         <br/>
                     </td>
                 </tr>
