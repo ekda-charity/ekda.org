@@ -6,18 +6,26 @@
         </tr>
     </thead>
     <tbody>
+        <?php if ($noOfSheep > 0) :?>
         <tr>
             <td>Sheep &times; <?=$noOfSheep?></td>
             <td><?=number_format($costOfSheep, 2, '.', '')?></td>
         </tr>
+        <?php endif; ?>
+        
+        <?php if ($noOfCows > 0) :?>
         <tr>
             <td>Cows &times; <?=$noOfCows?></td>
             <td><?=number_format($costOfCows, 2, '.', '')?></td>
         </tr>
+        <?php endif; ?>
+        
+        <?php if ($noOfCamels > 0) :?>
         <tr>
             <td>Camels &times; <?=$noOfCamels?></td>
             <td><?=number_format($costOfCamels, 2, '.', '')?></td>
         </tr>
+        <?php endif; ?>
     </tbody>
 
     <tfoot>
@@ -27,10 +35,3 @@
         </tr>
     </tfoot>
 </table>
-
-<?php if ($instructions != null) :?>
-    <h4 class="section-header">Instructions</h4>
-    <p>The following were the instructions included:</p>
-    <p><?=nl2br($instructions)?></p>
-<?php endif; ?>
-

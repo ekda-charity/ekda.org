@@ -13,16 +13,18 @@
                         <h4>Salam Aleikum (Peace be upon you)</h4>
                         <p>
                             Thank you for your Qurbani donation. This email is to confirm that your donation has been received successfully. 
-                            We will send you a Confirmation once the Sacrifice has been performed.
+                            We will send you a Confirmation email once the Sacrifice has been performed.
                         </p>
 
                         <h4 class="section-header">Donation Details</h4>
                         <?php include("data/templates/items.phtml"); ?>
                         
-                        <h4 class="section-header">Instructions</h4>
-                        <p>The following were the instructions included:</p>
-                        <p><?=nl2br($instructions)?></p>
-                        
+                        <?php if ($instructions != null && strlen(trim($instructions)) > 0) :?>
+                            <h4 class="section-header">Your instructions to us</h4>
+                            <p>The following were the instructions you gave:</p>
+                            <p><?=nl2br($instructions)?></p>
+                        <?php endif; ?>
+                            
                         <br/>
                     </td>
                 </tr>

@@ -19,6 +19,12 @@
                         <h4 class="section-header">Donation Details</h4>
                         <?php include("data/templates/items.phtml"); ?>
                         
+                        <?php if ($instructions != null && strlen(trim($instructions)) > 0) :?>
+                            <h4 class="section-header">Your instructions to us</h4>
+                            <p>The following were the instructions you gave:</p>
+                            <p><?=nl2br($instructions)?></p>
+                        <?php endif; ?>
+                        
                         <br/>
                     </td>
                 </tr>
