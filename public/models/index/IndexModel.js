@@ -32,12 +32,13 @@ namespace("ekda.index").IndexModel = function (data) {
             return;
         } else {
             
-            var message = '<div class="row">  ' +
+            var message = 
+            '<div class="row">  ' +
                 '<div class="col-md-12"> ' +
                     '<form class="form-horizontal"> ' +
                         '<div class="form-group"> ' +
                             '<div class="col-md-12"> ' +
-                                (self.disableInstructions() ? '' : '<textarea type="text" id="qurbaniName" name="name" class="form-control input-md" rows="3" placeholder="Names (Optional)"></textarea>') +
+                                (self.disableInstructions() ? '' : '<textarea type="text" id="qurbaniName" name="name" class="form-control input-md" rows="7" placeholder="One name per line (Optional)"></textarea>') +
                                 '<input id="qurbaniEmail" name="email" type="text" placeholder="Email to alert you after Qurbani (Optional)" class="form-control input-md top5"> ' +
                             '</div> ' +
                         '</div> ' +
@@ -51,13 +52,13 @@ namespace("ekda.index").IndexModel = function (data) {
                 buttons: {
                     cancel: {
                         label: "Cancel",
-                        className: "btn-default",
+                        className: "btn-default btn-lg",
                         callback: function () {
                         }
                     },
                     success: {
                         label: "Continue",
-                        className: "btn-primary",
+                        className: "btn-primary btn-lg",
                         callback: function () {
                             var name = $('#qurbaniName').val();
                             var email = $('#qurbaniEmail').val();
