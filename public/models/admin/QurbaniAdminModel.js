@@ -70,7 +70,7 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
                     '<form class="form-horizontal"> ' +
                         '<div class="form-group"> ' +
                             '<div class="col-md-12"> ' +
-                                (self.disableInstructions() ? '' : '<textarea type="text" id="qurbaniName" name="name" class="form-control input-md" rows="3" placeholder="Names, one per line (Optional)"></textarea>') +
+                                (self.disableInstructions() ? '' : '<textarea type="text" id="qurbaniName" name="name" class="form-control input-md" rows="10" placeholder="Names, one per line (Optional)"></textarea>') +
                                 '<input id="qurbaniEmail" name="email" type="text" placeholder="Email to alert you after Qurbani (Optional)" class="form-control input-md top5"> ' +
                             '</div> ' +
                         '</div> ' +
@@ -84,13 +84,13 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
                 buttons: {
                     cancel: {
                         label: "Cancel",
-                        className: "btn-default",
+                        className: "btn-default btn-lg",
                         callback: function () {
                         }
                     },
                     success: {
                         label: "Continue",
-                        className: "btn-primary",
+                        className: "btn-primary btn-lg",
                         callback: function () {
                             var name = $('#qurbaniName').val();
                             var email = $('#qurbaniEmail').val();
