@@ -32,7 +32,7 @@ namespace Application\API\Repositories\Implementations {
             $this->em = $em;
             
             $this->qurbaniRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Qurbani()))));
-            $this->emailsRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Emails()))));
+            $this->emailsRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Email()))));
             $this->usersRepo = new Repository($em, new EntityRepository($em, new ClassMetadata(get_class(new Entity\Users()))));
         }
     }
