@@ -111,11 +111,17 @@ namespace Application\Controller {
                 $details = $this->qurbaniRepo->getQurbaniDetails();
                 $stock = $this->qurbaniRepo->getStock();
                 
-                return $this->jsonResponse(array(
-                    'search' => $search,
-                    'details' => $details,
-                    'stock' => $stock
-                ));
+                if (!$search->success) {
+                    $response = ResponseUtils::createResponse($search->errors);
+                } else {
+                    $response = ResponseUtils::createSingleFetchResponse([
+                        'search' => $search,
+                        'details' => $details,
+                        'stock' => $stock
+                    ]);
+                }
+                
+                return $this->jsonResponse($response);
                 
             } catch (\Exception $ex) {
                 $response = ResponseUtils::createExceptionResponse($ex);

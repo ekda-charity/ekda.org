@@ -166,13 +166,13 @@ namespace("ekda.admin").QurbaniAdminModel = function () {
 
         ajaxGet(url, function (response) {
             lad.stop();
-            if (!response.search.success) {
-                toastrErrorFromList(response.search.errors, "Search Failed");
+            if (!response.success) {
+                toastrErrorFromList(response.errors, "Search Failed");
             } else {
-                self.results(response.search.items);
-                self.details(response.details);
-                self.stock(response.stock);
-                self.qurbani.details(response.details);
+                self.results(response.item.search.items);
+                self.details(response.item.details);
+                self.stock(response.item.stock);
+                self.qurbani.details(response.item.details);
             }
         });        
     };
