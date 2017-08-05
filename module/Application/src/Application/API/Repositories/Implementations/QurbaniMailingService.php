@@ -6,6 +6,7 @@ namespace Application\API\Repositories\Implementations {
         Application\API\Repositories\Interfaces\IEMailService,
         Application\API\Repositories\Interfaces\IQurbaniMailingService,
         Application\API\Canonicals\Dto\EmailRequest,
+        Application\API\Canonicals\Dto\QurbaniAlertTypes,
         Application\API\Canonicals\Entity\Qurbani;
 
     class QurbaniMailingService extends BaseRepository implements IQurbaniMailingService {
@@ -25,8 +26,7 @@ namespace Application\API\Repositories\Implementations {
             $this->domainPath = ($this->env == "development" ? "http" : "https") . "://" . $domainName;
         }
         
-        public function qurbaniConfrimationAlert($qurbaniKey) {
-            $qurbani = $this->qurbaniRepo->fetch($qurbaniKey);
+        public function qurbaniConfrimationAlert(Qurbani $qurbani) {
             
             $template = new TemplateEngine("data/templates/qurbani-confirmation.phtml", [
                 'title' => "Confirmation",
@@ -70,6 +70,14 @@ namespace Application\API\Repositories\Implementations {
                 $request->htmlbody = $template->render();
 
                 $this->emailRepository->sendMail($request);
+            }
+        }
+
+        public function qurbaniAlert(Qurbani $qurbani, $alertType) {
+            if ($alertType == QurbaniAlertTypes::Complete) {
+                $this->qurbaniCompleteAlert($qurbani);
+            } else if ($alertType == QurbaniAlertTypes::Received) {
+                $this->qurbaniConfrimationAlert($qurbani);
             }
         }
     }

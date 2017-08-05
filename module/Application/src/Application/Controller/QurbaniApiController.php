@@ -182,7 +182,8 @@ namespace Application\Controller {
                 $qurbanikey = $this->qurbaniRepo->checkStockAndAddQurbani($data, true);
                 
                 if ($data->getEmail() != null) {
-                    $this->gMailSvc->qurbaniConfrimationAlert($qurbanikey);
+                    $qurbani = $this->qurbaniRepo->getQurbani($qurbanikey);
+                    $this->gMailSvc->qurbaniConfrimationAlert($qurbani);
                 }
                 
                 $response = ResponseUtils::createResponse();
@@ -224,7 +225,7 @@ namespace Application\Controller {
                 $qurbani = $this->qurbaniRepo->confirmDonation($qurbanikey, $donationId);
 
                 if ($qurbani->getEmail() != null) {
-                    $this->gMailSvc->qurbaniConfrimationAlert($qurbani->getQurbanikey());
+                    $this->gMailSvc->qurbaniConfrimationAlert($qurbani);
                 }
                 
                 $donation = $qurbani->getSheep() . " sheep, " . $qurbani->getCows() . " cows, " . $qurbani->getCamels() . " camels";

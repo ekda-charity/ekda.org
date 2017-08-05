@@ -7,11 +7,12 @@ namespace Application {
         'controllers' => [
             'invokables' => [],
             'factories' => [
-                'Index'          => 'Application\ControllerFactory\IndexControllerFactory',
-                'Admin'          => 'Application\ControllerFactory\AdminControllerFactory',
-                'QurbaniApi'     => 'Application\ControllerFactory\QurbaniApiControllerFactory',
-                'BatchMail'      => 'Application\ControllerFactory\BatchMailControllerFactory',
-                'AdminApi'       => 'Application\ControllerFactory\AdminApiControllerFactory',
+                'Index'            => 'Application\ControllerFactory\IndexControllerFactory',
+                'Admin'            => 'Application\ControllerFactory\AdminControllerFactory',
+                'QurbaniApi'       => 'Application\ControllerFactory\QurbaniApiControllerFactory',
+                'QurbaniEmailsApi' => 'Application\ControllerFactory\QurbaniEmailsApiControllerFactory',
+                'BatchMail'        => 'Application\ControllerFactory\BatchMailControllerFactory',
+                'AdminApi'         => 'Application\ControllerFactory\AdminApiControllerFactory',
             ],
         ],
 
