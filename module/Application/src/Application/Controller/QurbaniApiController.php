@@ -6,13 +6,13 @@ namespace Application\Controller {
     use Zend\Authentication\AuthenticationServiceInterface;
     use JMS\Serializer\SerializerInterface;
     use Application\API\Canonicals\Response\ResponseUtils;
-    use Application\API\Repositories\Interfaces\IGeneralMailingService;
+    use Application\API\Repositories\Interfaces\IQurbaniMailingService;
     use Application\API\Repositories\Interfaces\IQurbaniRepository;
 
     class QurbaniApiController extends BaseController {
         
         /**
-         * @var IGeneralMailingService 
+         * @var IQurbaniMailingService 
          */
         private $gMailSvc;
         
@@ -26,7 +26,7 @@ namespace Application\Controller {
          */
         private $domainName;
         
-        public function __construct(AbstractContainer $navService, AuthenticationServiceInterface $authService, SerializerInterface $serializer, IQurbaniRepository $qurbaniRepo, IGeneralMailingService $gMailSvc, $domainName) {
+        public function __construct(AbstractContainer $navService, AuthenticationServiceInterface $authService, SerializerInterface $serializer, IQurbaniRepository $qurbaniRepo, IQurbaniMailingService $gMailSvc, $domainName) {
             parent::__construct($navService, $authService, $serializer);
             $this->gMailSvc = $gMailSvc;
             $this->qurbaniRepo = $qurbaniRepo;

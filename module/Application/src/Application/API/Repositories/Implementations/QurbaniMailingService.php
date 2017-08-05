@@ -4,21 +4,25 @@ namespace Application\API\Repositories\Implementations {
 
     use Doctrine\ORM\EntityManager,
         Application\API\Repositories\Interfaces\IEMailService,
-        Application\API\Repositories\Interfaces\IGeneralMailingService,
+        Application\API\Repositories\Interfaces\IQurbaniMailingService,
         Application\API\Canonicals\Dto\EmailRequest,
         Application\API\Canonicals\Entity\Qurbani;
 
-    class GeneralMailingService extends BaseRepository implements IGeneralMailingService {
+    class QurbaniMailingService extends BaseRepository implements IQurbaniMailingService {
         
         private $emailRepository;
         private $qurbaniDetails;
+        private $env;
+        private $subjectSuffix;
         private $domainPath;
         
-        public function __construct(EntityManager $em, IEMailService $emailRepository, $qurbaniDetails, $domainPath) {
+        public function __construct(EntityManager $em, IEMailService $emailRepository, $qurbaniDetails, $domainName, $env) {
             parent::__construct($em);
             $this->emailRepository = $emailRepository;
             $this->qurbaniDetails = $qurbaniDetails;
-            $this->domainPath = $domainPath;
+            $this->env = $env;
+            $this->subjectSuffix = $this->env == "production" ? "" : strtoupper(" ($this->env ENVIRONMENT)");
+            $this->domainPath = ($this->env == "development" ? "http" : "https") . "://" . $domainName;
         }
         
         public function qurbaniConfrimationAlert($qurbaniKey) {
@@ -39,7 +43,7 @@ namespace Application\API\Repositories\Implementations {
                             
             $request = new EmailRequest();
             $request->recipient = $qurbani->getEmail();
-            $request->subject = "Your Qurbani Donation";
+            $request->subject = "Your Qurbani Donation" . $this->subjectSuffix;
             $request->htmlbody = $template->render();
             
             $this->emailRepository->sendMail($request);
@@ -62,7 +66,7 @@ namespace Application\API\Repositories\Implementations {
 
                 $request = new EmailRequest();
                 $request->recipient = $qurbani->getEmail();
-                $request->subject = "Your Qurbani has been done";
+                $request->subject = "Your Qurbani has been done" . $this->subjectSuffix;
                 $request->htmlbody = $template->render();
 
                 $this->emailRepository->sendMail($request);

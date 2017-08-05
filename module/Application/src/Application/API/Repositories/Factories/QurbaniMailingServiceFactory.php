@@ -4,17 +4,16 @@ namespace Application\API\Repositories\Factories {
     
     use Zend\ServiceManager\FactoryInterface,
         Zend\ServiceManager\ServiceLocatorInterface,
-        Application\API\Repositories\Implementations\GeneralMailingService;
+        Application\API\Repositories\Implementations\QurbaniMailingService;
 
-    class GeneralMailingServiceFactory implements FactoryInterface {
+    class QurbaniMailingServiceFactory implements FactoryInterface {
 
         public function createService(ServiceLocatorInterface $serviceLocator) {
             $config    = $serviceLocator->get('Config');
             $em        = $serviceLocator->get('doctrine.entitymanager.orm_default');
             $emailRepo = $serviceLocator->get('EMailSvc');
-            $domainPath = ($config['ENV'] == "development" ? "http" : "https") . "://" . $config['DomainName'];
             
-            return new GeneralMailingService($em, $emailRepo, $config['QurbaniDetails'], $domainPath);
+            return new QurbaniMailingService($em, $emailRepo, $config['QurbaniDetails'], $config['DomainName'], $config['ENV']);
         }
     }
 }

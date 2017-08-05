@@ -61,7 +61,7 @@ namespace Application {
                 'Navigation'        => 'Zend\Navigation\Service\DefaultNavigationFactory',
                 'WordPrRepo'        => 'Application\API\Repositories\Factories\WordPressRepositoryFactory',
                 'EMailSvc'          => 'Application\API\Repositories\Factories\EMailServiceFactory',
-                'GMailSvc'          => 'Application\API\Repositories\Factories\GeneralMailingServiceFactory',
+                'GMailSvc'          => 'Application\API\Repositories\Factories\QurbaniMailingServiceFactory',
                 'QurbaniRepo'       => 'Application\API\Repositories\Factories\QurbaniRepositoryFactory',
                 'UsersRepo'         => 'Application\API\Repositories\Factories\UsersRepositoryFactory',
                 'AdminAuthService'  => 'Application\API\Repositories\Factories\AdminAuthServiceFactory',
